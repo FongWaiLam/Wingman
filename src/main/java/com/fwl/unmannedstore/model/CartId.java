@@ -14,7 +14,6 @@ import java.util.Objects;
 @NoArgsConstructor
 public class CartId implements Serializable {
     private int cart_id; // primary key
-    private int prod_id; // primary key
     private int rfid; // primary key
 
     @Override
@@ -27,11 +26,10 @@ public class CartId implements Serializable {
         }
         CartId that = (CartId) o;
         return Objects.equals(getCart_id(), that.getCart_id()) &&
-                Objects.equals(getProd_id(), that.getProd_id()) &&
                 Objects.equals(getRfid(), that.getRfid());
     }
     @Override
     public int hashCode() {
-        return Objects.hash(getCart_id(), getProd_id(), getRfid());
+        return Objects.hash(getCart_id(), getRfid());
     }
 }

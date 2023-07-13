@@ -18,7 +18,5 @@ public class Cart implements Serializable {
     @Id
     private int cart_id; // primary key
     @Id
-    private int prod_id; // primary key
-    @Id
     private int rfid; // primary key
 }
