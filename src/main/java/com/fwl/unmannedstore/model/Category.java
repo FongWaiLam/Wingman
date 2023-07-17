@@ -1,21 +1,26 @@
 package com.fwl.unmannedstore.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
+@Embeddable
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@AttributeOverrides({
+        @AttributeOverride(
+                name = "name",
+                column = @Column(name="cat_name")
+        ),
+        @AttributeOverride(
+                name = "description",
+                column = @Column(name="cat_description")
+        )
+})
 public class Category {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int cat_id; // primary key
     private String name; // max 255 chars
     private String description; // max 255 chars
 }

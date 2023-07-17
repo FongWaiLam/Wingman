@@ -1,10 +1,8 @@
 package com.fwl.unmannedstore.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,9 +10,16 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class RFID {
     @Id
     private int rfid;
-    private int prod_id;
-    private boolean isSold;
+    @ManyToOne
+    @JoinColumn(
+            name = "prod_id",
+            referencedColumnName = "prod_id",
+            nullable = false
+    )
+    private Product product;
+    private boolean isSold = false;
 }

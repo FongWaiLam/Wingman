@@ -1,25 +1,36 @@
 package com.fwl.unmannedstore.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Store {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int store_id;   // primary key
-    private String name; // Max 255 chars
-    private String address; // Max 255 chars
+    private String name;
+    private String address;
     private Date established_date;
-    private String status; // Max 50 chars
+    private String status;
+    @OneToMany(
+            mappedBy = "store"
+    )
+    private List<SalesRecord> salesRecordList;
+    public void addSalesRecord(SalesRecord salesRecord) {
+        if (salesRecordList == null) {
+            salesRecordList = new ArrayList<SalesRecord>();
+        }
+        salesRecordList.add(salesRecord);
+    }
 }
