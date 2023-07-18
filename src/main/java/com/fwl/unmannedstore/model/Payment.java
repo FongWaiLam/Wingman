@@ -18,7 +18,7 @@ import java.sql.Timestamp;
 @Builder
 public class Payment {
     @Id
-    private int pay_id; // primary key
+    private int payId; // primary key
     private Timestamp pay_date_time;
     @OneToOne(
             mappedBy = "payment"

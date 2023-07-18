@@ -18,19 +18,19 @@ import java.util.List;
 public class Store {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int store_id;   // primary key
+    private int storeId;   // primary key
     private String name;
     private String address;
     private Date established_date;
-    private String status;
-    @OneToMany(
-            mappedBy = "store"
-    )
-    private List<SalesRecord> salesRecordList;
-    public void addSalesRecord(SalesRecord salesRecord) {
-        if (salesRecordList == null) {
-            salesRecordList = new ArrayList<SalesRecord>();
-        }
-        salesRecordList.add(salesRecord);
-    }
+    private String status = "normal";
+//    @OneToMany(
+//            mappedBy = "store"
+//    )
+//    private List<SalesRecord> salesRecordList;
+//    public void addSalesRecord(SalesRecord salesRecord) {
+//        if (salesRecordList == null) {
+//            salesRecordList = new ArrayList<SalesRecord>();
+//        }
+//        salesRecordList.add(salesRecord);
+//    }
 }

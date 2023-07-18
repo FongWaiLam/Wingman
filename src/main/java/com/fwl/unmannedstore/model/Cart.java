@@ -18,7 +18,7 @@ import java.util.List;
 @Builder
 public class Cart implements Serializable {
     @Id
-    private int cart_id; // primary key
+    private int cartId; // primary key
     @OneToMany
     private List<RFID> rfidList;
 

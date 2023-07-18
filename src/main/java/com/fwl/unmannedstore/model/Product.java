@@ -20,32 +20,38 @@ import java.util.List;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int prod_id; // primary key
+    private int prodId; // primary key
     @Column(
             nullable = false
     )
     private String name;
     private String description; // max 255 chars
     private double price;
+    private String category;
+    private String photo; // path to image
+
     private Timestamp creation_date;
     private Timestamp last_updated;
-    @ManyToOne
+    @ManyToOne(
+            fetch = FetchType.EAGER
+    )
     @JoinColumn(
             name = "updated_by_username",
             referencedColumnName = "username"
     )
     private User updated_by_user;
-    @Embedded
-    private Category category;
+
     @Column(
             nullable = false
     )
     private boolean isActive;
-    private String photo; // path to image
-    @OneToMany(
-            mappedBy = "product"
-    )
-    private List<RFID> rfidList;
+
+//    @OneToMany(
+//            mappedBy = "product",
+//            cascade = CascadeType.ALL,
+//            fetch = FetchType.EAGER
+//    )
+//    private List<RFID> rfidList;
 
     @PrePersist
     void createdAt() {
@@ -61,11 +67,11 @@ public class Product {
 //        this.updated_by_user = LoggedUser.get();
     }
 
-    public void addRFID(RFID rfid) {
-        if (rfidList == null) {
-            rfidList = new ArrayList<RFID>();
-        }
-        rfidList.add(rfid);
-    }
+//    public void addRFID(RFID rfid) {
+//        if (rfidList == null) {
+//            rfidList = new ArrayList<RFID>();
+//        }
+//        rfidList.add(rfid);
+//    }
 
 }

@@ -13,13 +13,24 @@ import lombok.NoArgsConstructor;
 @Builder
 public class RFID {
     @Id
-    private int rfid;
-    @ManyToOne
+    private String epc;
+    @ManyToOne(
+            fetch = FetchType.EAGER
+    )
     @JoinColumn(
-            name = "prod_id",
-            referencedColumnName = "prod_id",
+            name = "prodId",
+            referencedColumnName = "prodId",
             nullable = false
     )
     private Product product;
     private boolean isSold = false;
+    @ManyToOne(
+            fetch = FetchType.EAGER
+    )
+    @JoinColumn(
+            name = "storeId",
+            referencedColumnName = "storeId",
+            nullable = false
+    )
+    private Store store;
 }

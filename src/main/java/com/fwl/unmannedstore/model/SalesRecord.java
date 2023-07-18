@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Data
@@ -15,22 +16,31 @@ import java.sql.Timestamp;
 @Builder
 public class SalesRecord {
     @Id
-    private int rfid;
+    private int salesId;
     @OneToOne
     @JoinColumn(
-            name = "pay_id",
-            referencedColumnName = "pay_id"
+            name = "payId",
+            referencedColumnName = "payId"
     )
     private Payment payment;
     @ManyToOne
     @JoinColumn(
-            name = "store_id",
-            referencedColumnName = "store_id"
+            name = "storeId",
+            referencedColumnName = "storeId"
     )
     private Store store;
     private Timestamp transaction_date_time;
     private double amount;
     private String status;
+
+    @OneToOne(
+            cascade = CascadeType.ALL
+    )
+    @JoinColumn(
+            name = "cartId",
+            referencedColumnName = "cartId"
+    )
+    private Cart cart;
 
     @PrePersist
     void createdAt() {
