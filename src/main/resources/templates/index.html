@@ -1,10 +1,106 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{base}">
 <head>
     <meta charset="UTF-8">
-  <title>USMS</title>
+    <link rel="stylesheet" type="text/css" href="/index.css">
 </head>
 <body>
-  <h1>Welcome to Unmanned Store Management System!</h1>
+<div layout:fragment="page_content">
+    <!-- content for this page -->
+    <div class="container text-center my-5">
+        <div class="row pt-5">
+            <div class="col-md-3">
+                <div class="card shadow h-100 custom-card">
+                    <img src="/images/Dashboard.jpg"
+                         class="card-img-top feature_pic"
+                         alt="flat-lay-statistics-presentation-with-chart-arrows">
+                    <div class="card-body">
+                        <p class="card-text">Manage Your Own Business!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card shadow h-100 custom-card">
+                    <div class="card-body">
+                        <h2 class="pt-5" th:text="${storeNo}?: 'NO DATA'"></h2><br>
+                        <p class="card-text">Active Store No.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card shadow h-100 custom-card">
+                    <div class="card-body">
+                        <h2  class="pt-5" th:text="${productNo}?: 'NO DATA'"></h2><br>
+                        <p class="card-text">Active Product No.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card shadow h-100 custom-card">
+                    <div class="card-body">
+                        <h2 class="pt-5" th:text="${monthSales}?: 'NO DATA'"></h2><br>
+                        <p class="card-text">Monthly Sales</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-5">
+            <div class="col-md-3">
+                <div class="card shadow h-100 custom-card">
+                    <div class="pt-5">
+                        <img src="/images/disable.png"
+                             class="card-img-top png-size"
+                             alt="disable">
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Deactivate Products</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card shadow h-100 custom-card">
+                    <div class="pt-5">
+                        <img src="/images/update_product.png"
+                             class="card-img-top png-size"
+                             alt="update_product">
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Update Product</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card shadow h-100 custom-card">
+                    <div class="pt-5">
+                        <img src="/images/add_store.png"
+                             class="card-img-top png-size"
+                             alt="add_sore">
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Open New Store</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card shadow h-100 custom-card">
+                    <div class="pt-5">
+                        <img src="/images/Update_Store_Info.png"
+                             class="card-img-top png-size"
+                             alt="update_store_info">
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Update Store Info</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block layout:fragment="scripts">
+    <!-- add any scripts related to this page -->
+</th:block>
 </body>
 </html>
