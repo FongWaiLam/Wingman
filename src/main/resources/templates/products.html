@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{base}">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="/index.css">
+</head>
+<body>
+<div layout:fragment="page_content">
+  <!-- content for this page -->
+  <div class="container text-center my-5">
+    <h1 class="text-center pt-4">Product List</h1>
+    <div class="container my-5">
+      <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Name</th>
+          <th scope="col">Price (£)</th>
+          <th scope="col">Photo</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Created On</th>
+          <th scope="col">Last Updated On</th>
+          <th scope="col">Last Updated By</th>
+          <th scope="col">Still Active?</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="p :${allProducts}">
+          <td th:text="${p.prodId}"></td>
+          <td th:text="${p.name}"></td>
+          <td th:text="${p.price}"></td>
+          <td><img th:src="@{/images/${p.photo}}"/></td>
+          <td th:text="${p.quantity}"></td>
+          <td th:text="${p.creation_date}"></td>
+          <td th:text="${p.last_updated}"></td>
+          <td th:text="${p.updated_by_user?.username}">No Record</td>
+          <td th:text="${p.isActive}"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<th:block layout:fragment="scripts">
+  <!-- add any scripts related to this page -->
+</th:block>
+</body>
+</html>

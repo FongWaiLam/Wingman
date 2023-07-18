@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{base}">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/index.css">
+</head>
+<body>
+<div layout:fragment="page_content">
+    <!-- content for this page -->
+    <div class="container text-center my-5">
+        <div classname="container my-5 p-5 w-50 offset-md-4" style="border:1px solid black;">
+            <h4 class="text-center pt-5">Update Product Information</h4>
+            <form class="col -md-4 my-5 p-5" th:action="@{/save_product}" method="post" th:object="${product}">
+                <div class="mb-3">
+                    <input type="hidden" name="id" th:value="${product.prodId}"/>
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" name="name" th:value="${product.name}">
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label" >Description</label>
+                    <textarea rows="5" cols="25" class="form-control" name="description" th:field="${product.description}"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="price" class="form-label">Price</label>
+                    <input type="number" class="form-control" name="price" step=".01" th:value="${product.price}">
+                </div>
+                <div class="mb-3">
+                    <label for="category" class="form-label">Category</label>
+                    <input type="text" class="form-control" name="category" th:value="${product.category}">
+                </div>
+                <div class="mb-3">
+                    <label for="photo" class="form-label">Photo</label>
+                    <input type="text" class="form-control" name="photo" th:value="${product.photo}">
+                </div>
+                <div class="mb-3">
+                    <label for="isActive" class="form-label">Active?</label>
+                    <input type="checkbox" class="form-control" name="isActive" th:value="${product.isActive}">
+                </div>
+                <center><button type="submit" class="btn btn-primary ">Submit</button></center>
+            </form>
+        </div>
+    </div>
+</div>
+<th:block layout:fragment="scripts">
+    <!-- add any scripts related to this page -->
+</th:block>
+</body>
+</html>

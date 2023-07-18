@@ -1,25 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{base}">
 <head>
     <meta charset="UTF-8">
     <title>USMS</title>
     <link rel="stylesheet" type="text/css" href="/checkout-styles.css">
-
 </head>
 <body>
-    <h1>Welcome to Unmanned Store Management System!</h1>
+<div layout:fragment="page_content">
+    <!-- content for this page -->
+    <div class="container text-center my-5">
+        <h1>Welcome to Unmanned Store Management System!</h1>
 
-    <div id="serialNotSupported" class="hidden">
-        <b>Web Serial</b> is not supported on this browser, make sure you are
-        running Chrome 78 or later and have enabled the
-        <code>#enable-experimental-web-platform-features</code> flag in
-        <code>chrome://flags</code>
+        <div id="serialNotSupported" class="hidden">
+            <b>Web Serial</b> is not supported on this browser, make sure you are
+            running Chrome 78 or later and have enabled the
+            <code>#enable-experimental-web-platform-features</code> flag in
+            <code>chrome://flags</code>
+        </div>
+
+        <button id="scan" type="button">Click to Scan Your Purchase!</button>
+
+        <p id ="rfidLog"></p>
+
     </div>
-
-    <button id="scan" type="button">Click to Scan Your Purchase!</button>
-
-    <p id ="rfidLog"></p>
-
+</div>
+<th:block layout:fragment="scripts">
+    <!-- add any scripts related to this page -->
     <script src="/checkout-script.js"></script>
+</th:block>
 </body>
 </html>
