@@ -1,10 +1,7 @@
 package com.fwl.unmannedstore.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString(exclude = "salesRecordList")
 public class Store {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,14 +21,14 @@ public class Store {
     private String address;
     private Date established_date;
     private String status = "normal";
-//    @OneToMany(
-//            mappedBy = "store"
-//    )
-//    private List<SalesRecord> salesRecordList;
-//    public void addSalesRecord(SalesRecord salesRecord) {
-//        if (salesRecordList == null) {
-//            salesRecordList = new ArrayList<SalesRecord>();
-//        }
-//        salesRecordList.add(salesRecord);
-//    }
+    @OneToMany(
+            mappedBy = "store"
+    )
+    private List<SalesRecord> salesRecordList;
+    public void addSalesRecord(SalesRecord salesRecord) {
+        if (salesRecordList == null) {
+            salesRecordList = new ArrayList<SalesRecord>();
+        }
+        salesRecordList.add(salesRecord);
+    }
 }

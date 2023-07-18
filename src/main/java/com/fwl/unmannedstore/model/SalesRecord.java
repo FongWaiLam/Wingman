@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 @Entity
 @Data
@@ -29,7 +28,7 @@ public class SalesRecord {
             referencedColumnName = "storeId"
     )
     private Store store;
-    private Timestamp transaction_date_time;
+    private Timestamp transactionDateTime;
     private double amount;
     private String status;
 
@@ -44,6 +43,6 @@ public class SalesRecord {
 
     @PrePersist
     void createdAt() {
-        this.transaction_date_time = new Timestamp(System.currentTimeMillis());
+        this.transactionDateTime = new Timestamp(System.currentTimeMillis());
     }
 }

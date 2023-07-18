@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -33,4 +35,10 @@ public class RFID {
             nullable = false
     )
     private Store store;
+
+    @PrePersist
+    void createdAt() {
+        this.product.setQuantity(product.getQuantity() + 1);
+    }
+
 }

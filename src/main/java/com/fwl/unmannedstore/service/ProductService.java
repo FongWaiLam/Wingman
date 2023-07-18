@@ -17,7 +17,7 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    // Add a Product or Update an existing Product
+    // Save a Product
     public void save(Product product) {
         productRepository.save(product);
     }
