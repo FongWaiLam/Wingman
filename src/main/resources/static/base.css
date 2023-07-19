@@ -1,0 +1,45 @@
+body,
+html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.row {
+    height: 100%;
+    margin: 0;
+}
+
+.column-1 {
+    /* Set a fixed width for the sidebar */
+    width: 240px;
+    /* Define a background color and text color for the sidebar */
+    background-color: #002060;
+    color: white;
+    font-size:16px;
+}
+
+.column-2 {
+    /* Use the remaining width for the main content area */
+    flex: 1;
+    font-size:14px;
+}
+.green-bar {
+    background-color: #2FBABE;
+    color: white;
+    font-size:16px;
+}
+
+.toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20rem; }
+.toggle.ios .toggle-handle { border-radius: 20rem; }
+.nav-item {
+    margin-right: 20px;
+}
+
+.logo {
+    height: 150px;
+}
+
+.powered-by-logo{
+    float: right;
+}
