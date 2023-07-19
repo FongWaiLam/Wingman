@@ -23,13 +23,13 @@ public class ProductService {
     }
 
     // Deactivate a product
-    public void deactivate(int prod_id) {
+    public void deactivateById(int prod_id) {
         productRepository.findById(prod_id).get().setActive(false);
     }
 
     // Get a specific product (For update)
-    public void getProductById(int prod_id) {
-        productRepository.findById(prod_id).get();
+    public Product getProductById(int prod_id) {
+        return productRepository.findById(prod_id).get();
     }
 
     // Delete a product

@@ -15,7 +15,7 @@ public interface SalesRecordRepository extends JpaRepository<SalesRecord, Intege
     public List<SalesRecord> findByStore(Store store);
 
     @Query(
-            value = "Select * from sales_record s where s.transaction_date_time >= :start And s.transaction_date_time <= :end And s.store_id = storeId",
+            value = "Select * from sales_record s where s.transaction_date_time >= :start And s.transaction_date_time <= :end And s.store_id = :storeId",
             nativeQuery = true
     )
     public List<SalesRecord> findByPeriod(@Param("start") Date start, @Param("end") Date end, @Param("store") int storeId);

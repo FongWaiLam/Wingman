@@ -3,6 +3,7 @@ package com.fwl.unmannedstore.service;
 import com.fwl.unmannedstore.model.SalesRecord;
 import com.fwl.unmannedstore.model.Store;
 import com.fwl.unmannedstore.respository.SalesRecordRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -10,10 +11,11 @@ import java.util.List;
 
 @Service
 public class SalesRecordService {
+    @Autowired
     private SalesRecordRepository salesRecordRepository;
 
     // Get the full Sales Record List
-    public List<SalesRecord> getAllSalesRecord() {
+    public List<SalesRecord> getAllSalesRecords() {
         return salesRecordRepository.findAll();
     }
 

@@ -59,7 +59,7 @@ public class RFIDService {
     }
 
     // Delete a RFID
-    public void deleteById(String epc) {
+    public void deleteByEPC(String epc) {
         RFID rfid = getRFIDByEPC(epc);
         quantityReduceByOne(rfid.getProduct());
 

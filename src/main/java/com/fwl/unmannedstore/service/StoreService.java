@@ -18,6 +18,12 @@ public class StoreService {
         return storeRepository.findAll();
     }
 
+    // Get a specific store By ID
+    public Store getStoreById(int storeId) {
+        return storeRepository.findById(storeId).get();
+    }
+
+
     // Add a new store or Update an existing store
     public void save(Store store) {
         storeRepository.save(store);

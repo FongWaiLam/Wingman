@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString(exclude = "rfidList")
+//@ToString(exclude = "rfidList")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

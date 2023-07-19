@@ -16,11 +16,12 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Cart implements Serializable {
+public class Cart{
     @Id
     private int cartId; // primary key
     @OneToMany
     private List<RFID> rfidList;
+    private double amount;
 
     public void addRFID(RFID rfid) {
         if (rfidList == null) {

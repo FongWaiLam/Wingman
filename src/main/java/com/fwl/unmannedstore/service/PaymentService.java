@@ -2,12 +2,14 @@ package com.fwl.unmannedstore.service;
 
 import com.fwl.unmannedstore.model.Payment;
 import com.fwl.unmannedstore.respository.PaymentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class PaymentService {
+    @Autowired
     private PaymentRepository paymentRepository;
 
     // Get the full payment List

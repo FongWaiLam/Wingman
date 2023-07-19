@@ -30,7 +30,6 @@ public class SalesRecord {
     private Store store;
     private Timestamp transactionDateTime;
     private double amount;
-    private String status;
 
     @OneToOne(
             cascade = CascadeType.ALL

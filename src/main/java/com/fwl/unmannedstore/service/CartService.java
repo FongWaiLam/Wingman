@@ -2,6 +2,7 @@ package com.fwl.unmannedstore.service;
 
 import com.fwl.unmannedstore.model.Cart;
 import com.fwl.unmannedstore.respository.CartRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.List;
 @Service
 public class CartService {
 
+    @Autowired
     private CartRepository cartRepository;
 
     // Get the full cart List
