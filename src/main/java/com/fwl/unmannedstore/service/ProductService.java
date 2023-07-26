@@ -17,6 +17,11 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    // Get the full Product List/ Inventory List
+    public int getActiveProductNo(boolean isActive) {
+        return productRepository.findByIsActive(isActive).size();
+    }
+
     // Save a Product
     public void save(Product product) {
         productRepository.save(product);

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{base}">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div layout:fragment="page_content">
+    <!-- content for this page -->
+    <div class="card shadow my-5 mx-5">
+        <div classname="container my-5 p-5 w-50 offset-md-4">
+            <h4 class="text-center pt-5">Staff Login</h4>
+            <form class="col -md-4 my-5 p-5" th:action="@{/auth/signin}" method="post">
+                    <div class="col-4 mb-3">
+                        <label for=email" class="form-label">Email</label>
+                        <input type="email" class="form-control" name="email">
+                    </div>
+                    <div class="col-4 mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="text" class="form-control" name="password">
+                    </div>
+                <center><button type="submit" id="form-submission" class="btn btn-primary ">Submit</button></center>
+            </form>
+        </div>
+    </div>
+</div>
+<th:block layout:fragment="scripts">
+    <!-- add any scripts related to this page -->
+
+</th:block>
+</body>
+</html>

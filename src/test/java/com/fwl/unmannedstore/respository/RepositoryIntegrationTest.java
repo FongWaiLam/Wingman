@@ -3,7 +3,7 @@ package com.fwl.unmannedstore.respository;
 import com.fwl.unmannedstore.model.Product;
 import com.fwl.unmannedstore.model.RFID;
 import com.fwl.unmannedstore.model.Store;
-import com.fwl.unmannedstore.model.User;
+import com.fwl.unmannedstore.security.repo.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

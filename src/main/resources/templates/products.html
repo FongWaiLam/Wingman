@@ -32,7 +32,7 @@
           <td th:text="${p.prodId}"></td>
           <td th:text="${p.name}"></td>
           <td th:text="${p.price}"></td>
-          <td><img th:src="@{/images/${p.photo}}"/></td>
+          <td><img th:src="@{/product_photos/{prodId}/{photo}(prodId=${p.prodId}, photo=${p.photo})}" class="thumbnail"/></td>
           <td th:text="${p.quantity}"></td>
           <td th:text="${p.creation_date}"></td>
           <td th:text="${p.last_updated}"></td>

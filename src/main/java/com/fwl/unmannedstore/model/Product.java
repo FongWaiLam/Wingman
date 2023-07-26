@@ -1,5 +1,6 @@
 package com.fwl.unmannedstore.model;
 
+import com.fwl.unmannedstore.security.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -23,10 +24,10 @@ public class Product {
             nullable = false
     )
     private String name;
-    private String description; // max 255 chars
     private double price;
     private String category;
     private String photo; // path to image
+    private List<String> photos;
     private int quantity = 0;
     private Timestamp creation_date;
     private Timestamp last_updated;
@@ -35,7 +36,7 @@ public class Product {
     )
     @JoinColumn(
             name = "updated_by_username",
-            referencedColumnName = "username"
+            referencedColumnName = "email"
     )
     private User updated_by_user;
 
@@ -71,5 +72,11 @@ public class Product {
 //        }
 //        rfidList.add(rfid);
 //    }
+        public void addPhotos(String photo) {
+        if (photos == null) {
+            photos = new ArrayList<String>();
+        }
+        photos.add(photo);
+    }
 
 }

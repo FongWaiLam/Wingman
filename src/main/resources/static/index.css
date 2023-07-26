@@ -1,11 +1,7 @@
-
-
 .png-size {
-  /* Reduce the width of the images to half of the card width */
   width: 30%;
-  /* Set the height of the images */
   height: auto;
 }
 .custom-card {
-    min-height: 200px; /* Set a specific minimum height for the cards */
+    min-height: 200px;
 }

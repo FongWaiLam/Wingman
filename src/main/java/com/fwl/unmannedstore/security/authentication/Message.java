@@ -1,0 +1,10 @@
+package com.fwl.unmannedstore.security.authentication;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
+public class Message {
+    private String message;
+}
