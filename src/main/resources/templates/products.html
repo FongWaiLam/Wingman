@@ -5,7 +5,6 @@
       layout:decorate="~{base}">
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" type="text/css" href="/index.css">
 </head>
 <body>
 <div layout:fragment="page_content">
@@ -25,6 +24,9 @@
           <th scope="col">Last Updated On</th>
           <th scope="col">Last Updated By</th>
           <th scope="col">Still Active?</th>
+          <th scope="col">+ RFID</th>
+          <th scope="col">Edit</th>
+          <th scope="col">Deactivate</th>
         </tr>
         </thead>
         <tbody>
@@ -38,6 +40,9 @@
           <td th:text="${p.last_updated}"></td>
           <td th:text="${p.updated_by_user?.username}">No Record</td>
           <td th:text="${p.isActive}"></td>
+          <td><a th:href="@{/usms/product/{id}/add_rfid(id=${p.prodId})}" class="btn btn-outline-primary btn-sm inline"><i class="fa-solid fa-tags"></i></a></td>
+          <td><a th:href="@{/usms/product/{id}/update_product(id=${p.prodId})}" class="btn btn-outline-primary btn-sm inline"><i class="fa-solid fa-pen-to-square"></i></a></td>
+          <td><a th:href="@{/usms/product/{id}/deactivate_product(id=${p.prodId})}" class="btn btn-outline-primary btn-sm inline"><i class="fa-solid fa-store-slash"></i></a></td>
         </tr>
         </tbody>
       </table>

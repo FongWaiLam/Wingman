@@ -79,9 +79,9 @@ public class WebSecurityConfiguration {
         // After logged in, a JWTCookie will be sent to the browser
         http
                 .authorizeHttpRequests(authConfig -> {
-                    authConfig.requestMatchers(HttpMethod.GET,  "/usms/login", "/error", "/css/**", "/js/**", "/images/**", "/product_photos").permitAll();
+                    authConfig.requestMatchers(HttpMethod.GET,  "/", "/usms/login", "/error", "/css/**", "/js/**", "/images/**", "/product_photos").permitAll();
                     authConfig.requestMatchers(HttpMethod.POST,   "/usms/signin", "/usms/logout").permitAll();
-//                    authConfig.requestMatchers(HttpMethod.GET, "/", "/usms").hasRole("USER");
+//                    authConfig.requestMatchers(HttpMethod.GET, "/usms").hasRole("USER");
 //                    authConfig.requestMatchers(HttpMethod.GET, "/admin").hasRole("ADMIN");
                     authConfig.anyRequest().authenticated();
                 })

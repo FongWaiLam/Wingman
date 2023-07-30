@@ -23,6 +23,7 @@ public class Product {
     )
     private String name;
     private double price;
+    private String description;
     private String category;
     private String photo; // path to image
     private List<String> photos;

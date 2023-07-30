@@ -10,11 +10,60 @@
 <body>
 <div layout:fragment="page_content">
     <!-- content for this page -->
-    <div class="container text-center my-5">
-        <div classname="container my-5 p-5 w-50 offset-md-4" style="border:1px solid black;">
+<!--    <div class="container text-center my-5">-->
+<!--        <div classname="container my-5 p-5 w-50 offset-md-4" style="border:1px solid black;">-->
+<!--            <h1 class="text-center pt-5">Update Product Information</h1>-->
+<!--            <form class="col -md-4 my-5 p-5" th:action="@{/save_product}" method="post" th:object="${product}">-->
+<!--                    <input type="hidden" name="id" th:value="${product.prodId}"/>-->
+<!--                <div class="row">-->
+<!--                    <div class="col-2"></div>-->
+<!--                    <div class="col-6 mb-3">-->
+<!--                        <label for="name" class="form-label">Name</label>-->
+<!--                        <input type="text" class="form-control" name="name" th:value="${product.name}">-->
+<!--                    </div>-->
+<!--                    <div class="col-2 mb-3 d-flex my-auto">-->
+<!--                        <label class="form-check-label" for="isActive">Active?</label>-->
+<!--                        <input class="form-check-input " type="checkbox" value="true" name="isActive" id="isActive" th:value="${product.isActive}">-->
+<!--                    </div>-->
+<!--                    <div class="col-2"></div>-->
+<!--                </div>-->
+<!--                <div class="row">-->
+<!--                    <div class="col-2"></div>-->
+<!--                    <div class="col-4 mb-3">-->
+<!--                        <label for="price" class="form-label">Price</label>-->
+<!--                        <input type="number" class="form-control" name="price" step=".01" th:value="${product.price}">-->
+<!--                    </div>-->
+<!--                    <div class="col-4 mb-3">-->
+<!--                        <label for="category" class="form-label">Category</label>-->
+<!--                        <input type="text" class="form-control" name="category" th:value="${product.category}">-->
+<!--                    </div>-->
+<!--                    <div class="col-2"></div>-->
+<!--                </div>-->
+<!--                <div class="row">-->
+<!--                    <div class="col-2"></div>-->
+<!--                    <div class="col-8 mb-3">-->
+<!--                        <label for="description" class="form-label" >Description</label>-->
+<!--                        <textarea rows="5" cols="25" class="form-control" name="description" th:value="${product.description}"></textarea>-->
+<!--                    </div>-->
+<!--                    <div class="col-2"></div>-->
+<!--                </div>-->
+<!--                <div class="row">-->
+<!--                    <div class="col-2"></div>-->
+<!--                    <div class="col-8 mb-3">-->
+<!--                        <label for="photo" class="form-label">Photo</label>-->
+<!--                        <input type="text" class="form-control" name="photo" th:value="${product.photo}">-->
+<!--                    </div>-->
+<!--                    <div class="col-2"></div>-->
+<!--                </div>-->
+<!--                <center><button type="submit" class="btn btn-primary ">Submit</button></center>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--    </div>-->
+
+    <div class="card shadow my-5 mx-5">
+        <div classname="container my-5 p-5 w-50 offset-md-4">
             <h1 class="text-center pt-5">Update Product Information</h1>
-            <form class="col -md-4 my-5 p-5" th:action="@{/save_product}" method="post" th:object="${product}">
-                    <input type="hidden" name="id" th:value="${product.prodId}"/>
+            <form class="col -md-4 my-5 p-5" th:action="@{/usms/save_product}" method="post" th:object="${product}" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-2"></div>
                     <div class="col-6 mb-3">
@@ -23,7 +72,7 @@
                     </div>
                     <div class="col-2 mb-3 d-flex my-auto">
                         <label class="form-check-label" for="isActive">Active?</label>
-                        <input class="form-check-input " type="checkbox" value="true" name="isActive" id="isActive" th:value="${product.isActive}">
+                        <input class="form-check-input " type="checkbox" name="Active" id="isActive" checked="checked" th:value="${product.isActive}">
                     </div>
                     <div class="col-2"></div>
                 </div>
@@ -43,25 +92,40 @@
                     <div class="col-2"></div>
                     <div class="col-8 mb-3">
                         <label for="description" class="form-label" >Description</label>
-                        <textarea rows="5" cols="25" class="form-control" name="description" th:field="${product.description}"></textarea>
+                        <textarea rows="5" cols="25" class="form-control" name="description" th:value="${product.description}"></textarea>
                     </div>
                     <div class="col-2"></div>
                 </div>
-                <div class="row">
-                    <div class="col-2"></div>
-                    <div class="col-8 mb-3">
-                        <label for="photo" class="form-label">Photo</label>
-                        <input type="text" class="form-control" name="photo" th:value="${product.photo}">
-                    </div>
-                    <div class="col-2"></div>
-                </div>
-                <center><button type="submit" class="btn btn-primary ">Submit</button></center>
+<!--                <div class="row">-->
+<!--                    <div class="col-2"></div>-->
+<!--                    <div class="col-4 mb-3">-->
+<!--                        <label for="photoFile" class="form-label">Photo</label>-->
+<!--                        <input type="file" id="photoFile" class="form-control" name="photoFile" onchange="preview(event,'photo-preview');" th:value="${product.photo}">-->
+<!--                    </div>-->
+<!--                    <div class="col-4 mb-3">-->
+<!--                        <div id="photo-preview"></div>-->
+<!--                    </div>-->
+<!--                    <div class="col-2"></div>-->
+<!--                </div>-->
+<!--                <div class="row">-->
+<!--                    <div class="col-2"></div>-->
+<!--                    <div class="col-4 mb-3">-->
+<!--                        <label for="photoFiles" class="form-label">More Photos</label>-->
+<!--                        <input type="file" id="photoFiles" class="form-control" name="photoFiles" onchange="preview(event,'photos-preview');" multiple th:value="${product.photos}">-->
+<!--                    </div>-->
+<!--                    <div class="col-4 mb-3">-->
+<!--                        <div id="photos-preview"></div>-->
+<!--                    </div>-->
+<!--                    <div class="col-2"></div>-->
+<!--                </div>-->
+                <center><button type="submit" id="form-submission" class="btn btn-primary ">Submit</button></center>
             </form>
         </div>
     </div>
 </div>
 <th:block layout:fragment="scripts">
     <!-- add any scripts related to this page -->
+    <script src="/js/photo-preview.js"></script>
 </th:block>
 </body>
 </html>

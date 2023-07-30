@@ -110,14 +110,14 @@ public class ProductController {
         return new ModelAndView("product", "product", product);
     }
 
-    @RequestMapping("/updateProduct/{prodId}")
+    @GetMapping("/product/{prodId}/update_product")
     public String editProductById(@PathVariable int prodId, Model model) {
         Product product = productService.getProductById(prodId);
         model.addAttribute("product", product);
         return"update_product";
     }
 
-    @GetMapping("/deactivate_Product/{prod_id}")
+    @GetMapping("/product/{prod_id}/deactivate_product")
     public String deleteProductById(@PathVariable int prod_id) {
         productService.deactivateById(prod_id);
         return "redirect:/usms/products_inventory";
