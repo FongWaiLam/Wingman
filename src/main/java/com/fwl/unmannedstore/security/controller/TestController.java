@@ -5,22 +5,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-
-//@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 @Controller
 @RequestMapping("/usms")
 public class TestController {
-//    @GetMapping("/all")
-//    public String allAccess() {
-//        return "Public Content.";
-//    }
 
-    @GetMapping("/login")
+    @GetMapping("login")
     public String login() {
         return "login";
     }
-//
+
+
 //    @GetMapping("/user")
 //    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 //    public String userAccess() {
