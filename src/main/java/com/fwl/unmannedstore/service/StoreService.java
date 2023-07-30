@@ -14,7 +14,7 @@ public class StoreService {
     private StoreRepository storeRepository;
 
     // Get the full store List
-    public List<Store> getAllRFIDs() {
+    public List<Store> getAllStores() {
         return storeRepository.findAll();
     }
 

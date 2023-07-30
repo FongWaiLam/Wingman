@@ -1,7 +1,7 @@
 package com.fwl.unmannedstore.security.authentication;
 
 import com.fwl.unmannedstore.security.entity.Role;
-import com.fwl.unmannedstore.security.entity.validation.ValidRole;
+import com.fwl.unmannedstore.security.entity.ValidRole;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

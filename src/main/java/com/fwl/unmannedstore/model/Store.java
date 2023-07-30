@@ -2,6 +2,7 @@ package com.fwl.unmannedstore.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,8 +20,9 @@ public class Store {
     private int storeId;   // primary key
     private String name;
     private String address;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date established_date;
-    private String status = "normal";
+    private String status;
     @OneToMany(
             mappedBy = "store"
     )

@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>USMS</title>
-    <link rel="stylesheet" type="text/css" href="/checkout-styles.css">
+    <link rel="stylesheet" type="text/css" href="/css/checkout-styles.css">
 </head>
 <body>
 <div layout:fragment="page_content">
@@ -23,13 +23,27 @@
 
         <button id="scan" type="button">Click to Scan Your Purchase!</button>
 
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th scope="col">RFID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Photo</th>
+                <th scope="col">Price (£)</th>
+                <th scope="col">Quantity</th>
+            </tr>
+            </thead>
+            <tbody id="basket">
+            </tbody>
+        </table>
+
         <p id ="rfidLog"></p>
 
     </div>
 </div>
 <th:block layout:fragment="scripts">
     <!-- add any scripts related to this page -->
-    <script src="/checkout-script.js"></script>
+    <script src="/js/checkout-script.js"></script>
 </th:block>
 </body>
 </html>

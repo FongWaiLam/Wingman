@@ -3,8 +3,6 @@ package com.fwl.unmannedstore.model;
 import com.fwl.unmannedstore.security.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -45,12 +43,12 @@ public class Product {
     )
     private boolean isActive;
 
-//    @OneToMany(
-//            mappedBy = "product",
-//            cascade = CascadeType.ALL,
-//            fetch = FetchType.EAGER
-//    )
-//    private List<RFID> rfidList;
+    @OneToMany(
+            mappedBy = "product",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
+    )
+    private List<RFID> rfidList;
 
     @PrePersist
     void createdAt() {

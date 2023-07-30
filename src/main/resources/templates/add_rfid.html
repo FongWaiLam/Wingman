@@ -4,17 +4,76 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{base}">
 <head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" type="text/css" href="/index.css">
+    <meta charset="UTF-8">
 </head>
 <body>
 <div layout:fragment="page_content">
-  <!-- content for this page -->
-  <div class="container text-center my-5">
-  </div>
+    <!-- content for this page -->
+    <div class="card shadow my-5 mx-5">
+        <div classname="container my-5 p-5 w-50 offset-md-4">
+            <h1 class="text-center pt-5">New RFIDs Register</h1>
+            <form class="col -md-4 my-5 p-5">
+
+                <div class="row">
+                    <div class="col-2"></div>
+                    <div class="col-4 mb-3">
+                        <div><img
+                                th:src="@{/product_photos/{prodId}/{photo}(prodId=${product.prodId}, photo=${product.photo})}"
+                                class="thumbnail"/></div>
+                    </div>
+                    <div class="col-4 mb-3">
+                        <label for="name" class="form-label">Product Name</label>
+                        <input type="text" class="form-control" id="name" name="name" th:value="${product.name}"
+                               disabled>
+                        <label for="prodId" class="form-label">Product ID</label>
+                        <input type="text" class="form-control" id="prodId" name="prodId" th:value="${product.prodId}"
+                               disabled>
+                        <label for="storeId" class="form-label">Store</label>
+                        <select class="form-control" name="storeId" id="storeId">
+                            <option selected="true" disabled="disabled" value="">select option</option>
+                            <option th:each="s :${storeList}" th:value="${s.storeId}"
+                                    th:text="${s.name} + '   [ID : '+ ${s.storeId} +']'">
+                        </select>
+
+                    </div>
+                    <div class="col-2"></div>
+                </div>
+
+                <div class="container my-5 p-5" id="rfidList">
+                    <div><h4 class="text-center pt-5">RFID List</h4>
+                        <center>
+                            <button id="scan" class="btn btn-warning" type="button">Click to Scan!</button>
+                        </center>
+                    </div>
+
+                    <div id="serialNotSupported" class="hidden">
+                        <b>Web Serial</b> is not supported on this browser, make sure you are
+                        running Chrome 78 or later and have enabled the
+                        <code>#enable-experimental-web-platform-features</code> flag in
+                        <code>chrome://flags</code>
+                    </div>
+
+                    <table class="table table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">RFID</th>
+                        </tr>
+                        </thead>
+                        <tbody id="stock">
+                        </tbody>
+                    </table>
+                </div>
+                <center>
+                    <button type="button" id="form-submission" class="btn btn-primary">Submit</button>
+                </center>
+            </form>
+        </div>
+    </div>
 </div>
 <th:block layout:fragment="scripts">
-  <!-- add any scripts related to this page -->
+    <!-- add any scripts related to this page -->
+    <script src="/js/add_rfid.js"></script>
+
 </th:block>
 </body>
 </html>

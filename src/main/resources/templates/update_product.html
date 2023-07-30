@@ -12,7 +12,7 @@
     <!-- content for this page -->
     <div class="container text-center my-5">
         <div classname="container my-5 p-5 w-50 offset-md-4" style="border:1px solid black;">
-            <h4 class="text-center pt-5">Update Product Information</h4>
+            <h1 class="text-center pt-5">Update Product Information</h1>
             <form class="col -md-4 my-5 p-5" th:action="@{/save_product}" method="post" th:object="${product}">
                     <input type="hidden" name="id" th:value="${product.prodId}"/>
                 <div class="row">

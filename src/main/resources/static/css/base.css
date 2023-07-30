@@ -43,3 +43,13 @@ html {
 .powered-by-logo{
     float: right;
 }
+.hidden {
+  display: none;
+}
+
+label {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+#datepicker{width:180px;}
+#datepicker > span:hover{cursor: pointer;}

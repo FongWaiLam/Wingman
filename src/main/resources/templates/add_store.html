@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{base}">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+</head>
+<body>
+<div layout:fragment="page_content">
+  <!-- content for this page -->
+  <div class="card shadow my-5 mx-5">
+    <div classname="container my-5 p-5 w-50 offset-md-4">
+      <h1 class="text-center pt-5">New Store Register</h1>
+      <form class="col -md-4 my-5 p-5" th:action="@{/usms/save_store}" method="post">
+        <div class="row">
+          <div class="col-1"></div>
+          <div class="col-6 mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" name="name">
+          </div>
+          <div class="col-4 mb-3">
+            <label for="status" class="form-label">Status</label>
+            <select class="form-control" name="status" id="status">
+              <option value="Normal">Normal</option>
+              <option value="Suspended">Suspended</option>
+              <option value="Closed Down">Closed Down</option>
+            </select>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-1"></div>
+          <div class="col-6 mb-3">
+            <label for="address" class="form-label">Address</label>
+            <textarea rows="5" cols="25" class="form-control" name="address"></textarea>
+          </div>
+          <div class="col-4 mb-3">
+            <label for="established_date" class="form-label">Select Established Date: </label>
+            <div id="datePicker"
+                 class="input-group date"
+                 data-date-format="yyyy-mm-dd">
+              <input class="form-control"
+                     type="text" readonly name="established_date"/>
+              <span class="input-group-addon">
+                <i class="glyphicon glyphicon-calendar"></i>
+            </span>
+            </div>
+          </div>
+
+        </div>
+        <center><button type="submit" id="form-submission" class="btn btn-primary ">Submit</button></center>
+      </form>
+    </div>
+  </div>
+</div>
+<th:block layout:fragment="scripts">
+  <!-- add any scripts related to this page -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+  <script>
+        $(function () {
+            $("#datePicker").datepicker({
+                autoclose: true,
+                todayHighlight: true,
+            }).datepicker('update', new Date());
+        });
+    </script>
+
+</th:block>
+</body>
+</html>

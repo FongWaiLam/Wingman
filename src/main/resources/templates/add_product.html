@@ -11,8 +11,8 @@
     <!-- content for this page -->
     <div class="card shadow my-5 mx-5">
         <div classname="container my-5 p-5 w-50 offset-md-4">
-            <h4 class="text-center pt-5">New Product Register</h4>
-            <form class="col -md-4 my-5 p-5" th:action="@{/save_product}" method="post" enctype="multipart/form-data">
+            <h1 class="text-center pt-5">New Product Register</h1>
+            <form class="col -md-4 my-5 p-5" th:action="@{/usms/save_product}" method="post" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-2"></div>
                     <div class="col-6 mb-3">
@@ -74,7 +74,7 @@
 </div>
 <th:block layout:fragment="scripts">
     <!-- add any scripts related to this page -->
-    <script src="/photo-preview.js"></script>
+    <script src="/js/photo-preview.js"></script>
 
 </th:block>
 </body>
