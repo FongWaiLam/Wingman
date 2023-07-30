@@ -1,4 +1,4 @@
-package com.fwl.unmannedstore.security.config;
+package com.fwl.unmannedstore.security.authentication;
 
 import com.fwl.unmannedstore.security.entity.Role;
 import com.fwl.unmannedstore.security.entity.User;
@@ -29,14 +29,16 @@ public class JwtService {
     private String jwtCookie;
 
 
+    // Path represent the specific path that this cookie uses for
+    // Browser will send request with this cookie only for paths under this path
     public ResponseCookie generateJwtCookie(User userPrincipal) {
         String jwt = generateTokenFromUsername(userPrincipal.getUsername(), userPrincipal.getRole());
-        ResponseCookie cookie = ResponseCookie.from(jwtCookie, jwt).path("/api").maxAge(24 * 60 * 60).httpOnly(true).build();
+        ResponseCookie cookie = ResponseCookie.from(jwtCookie, jwt).path("/usms").maxAge(jwtExpirationMs).httpOnly(true).build();
         return cookie;
     }
 
     public ResponseCookie getCleanJwtCookie() {
-        ResponseCookie cookie = ResponseCookie.from(jwtCookie, null).path("/api").build();
+        ResponseCookie cookie = ResponseCookie.from(jwtCookie, null).path("/usms").build();
         return cookie;
     }
 

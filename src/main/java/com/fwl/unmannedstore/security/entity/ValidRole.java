@@ -1,4 +1,4 @@
-package com.fwl.unmannedstore.security.entity.validation;
+package com.fwl.unmannedstore.security.entity;
 
 
 import jakarta.validation.Constraint;

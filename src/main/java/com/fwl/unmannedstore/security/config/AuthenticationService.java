@@ -1,8 +1,10 @@
-package com.fwl.unmannedstore.security.authentication;
+package com.fwl.unmannedstore.security.config;
 
-import com.fwl.unmannedstore.security.config.JwtService;
+import com.fwl.unmannedstore.security.authentication.AuthenticationRequest;
+import com.fwl.unmannedstore.security.authentication.JwtService;
+import com.fwl.unmannedstore.security.authentication.RegisterRequest;
 import com.fwl.unmannedstore.security.entity.User;
-import com.fwl.unmannedstore.security.repo.UserRepository;
+import com.fwl.unmannedstore.security.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

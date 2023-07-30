@@ -1,6 +1,5 @@
-package com.fwl.unmannedstore.security.entity.validation;
+package com.fwl.unmannedstore.security.entity;
 
-import com.fwl.unmannedstore.security.entity.Role;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

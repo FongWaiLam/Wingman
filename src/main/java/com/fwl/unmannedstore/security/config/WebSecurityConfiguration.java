@@ -1,9 +1,10 @@
 package com.fwl.unmannedstore.security.config;
 
-import com.fwl.unmannedstore.security.repo.UserRepository;
+import com.fwl.unmannedstore.security.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -16,7 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
 @Configuration
@@ -26,11 +27,6 @@ import org.springframework.transaction.annotation.Transactional;
 //jsr250Enabled = true,
 //prePostEnabled = true) // by default
 public class WebSecurityConfiguration {
-
-    private static final String[] WHITE_LIST_URLS = {
-            "/usms/login"
-    };
-
     @Autowired
     private UserRepository repository;
 
@@ -48,11 +44,10 @@ public class WebSecurityConfiguration {
     // must override "UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;"
     // parameter: username, method expression repo.findByEmail(username) [return Optional]
     @Bean
-    @Transactional
     public UserDetailsService userDetailsService() {
         return userEmail
                 -> repository
-                .findByEmailIgnoreCase(userEmail)
+                .findByEmail(userEmail)
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + userEmail));
     }
 
@@ -78,14 +73,45 @@ public class WebSecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable())
-                .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/auth/**").permitAll()
-                                .requestMatchers(WHITE_LIST_URLS).permitAll()
-                                .anyRequest().authenticated()
+
+        // Even login path stated in formlogin, it still should state in requestMatchers
+        // All login path, signin postRequest and resources should be stated in the requestMatchers.
+        // After logged in, a JWTCookie will be sent to the browser
+        http
+                .authorizeHttpRequests(authConfig -> {
+                    authConfig.requestMatchers(HttpMethod.GET,  "/usms/login", "/error", "/css/**", "/js/**", "/images/**", "/product_photos").permitAll();
+                    authConfig.requestMatchers(HttpMethod.POST,   "/usms/signin", "/usms/logout").permitAll();
+//                    authConfig.requestMatchers(HttpMethod.GET, "/", "/usms").hasRole("USER");
+//                    authConfig.requestMatchers(HttpMethod.GET, "/admin").hasRole("ADMIN");
+                    authConfig.anyRequest().authenticated();
+                })
+                .formLogin(login -> {
+                            login.loginPage("/usms/login");
+                            login.defaultSuccessUrl("/usms");
+                            login.failureUrl("/usms/login-error");
+                        }
                 );
+//                .logout(logout -> {
+//                    logout.logoutRequestMatcher(new AntPathRequestMatcher("/usms/signout"));
+//                    logout.logoutSuccessUrl("/usms/login");
+//                    logout.deleteCookies("usms");
+//                    logout.clearAuthentication(true);
+//                    logout.invalidateHttpSession(true);
+//                });
+
+        http    .csrf(csrf -> csrf.disable())
+//                .cors(cors -> cors.disable())
+                .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+//        http
+//                .csrf(csrf -> csrf.disable());
+//                .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
+//                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                .authorizeHttpRequests(auth ->
+//                        auth.requestMatchers("/usms/auth/**").permitAll()
+//                                .requestMatchers("/usms/**","/css/**", "/images/**","/js/**").permitAll()
+//                                .anyRequest().authenticated()
+//                );
 
         http.authenticationProvider(authenticationProvider());
 

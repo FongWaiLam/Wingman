@@ -1,5 +1,6 @@
 package com.fwl.unmannedstore.security.config;
 
+import com.fwl.unmannedstore.security.authentication.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -72,32 +73,40 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        try {
-            String jwt = parseJwt(request);
 
-            if ((jwt != null) && jwtService.validateJwtToken(jwt)) {
-                String username = jwtService.getUserNameFromJwtToken(jwt);
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            // perform Jwt-authentication
+            try {
+                String jwt = parseJwt(request);
+                logger.info("jwt: " + jwt);
 
-                UsernamePasswordAuthenticationToken authentication =
-                        new UsernamePasswordAuthenticationToken(userDetails,
-                                null,
-                                userDetails.getAuthorities());
+                if ((jwt != null) && jwtService.validateJwtToken(jwt)) {
+                    logger.info("jwt is not null.");
+                    String username = jwtService.getUserNameFromJwtToken(jwt);
+                    UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                    logger.info("User logged in: " + username);
+                    UsernamePasswordAuthenticationToken authentication =
+                            new UsernamePasswordAuthenticationToken(userDetails,
+                                    null,
+                                    userDetails.getAuthorities());
 
-                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+
+                    logger.info("SecurityContextHolder set to " + username);
+                }
+            } catch (Exception e) {
+                logger.error("Cannot set user authentication: {}", e);
             }
-        } catch (Exception e) {
-            logger.error("Cannot set user authentication: {}", e);
-        }
 
-        filterChain.doFilter(request, response);
+            filterChain.doFilter(request, response);
+
     }
 
-    private String parseJwt(HttpServletRequest request) {
+    private String parseJwt (HttpServletRequest request){
         String jwt = jwtService.getJwtFromCookies(request);
         return jwt;
     }
+
 }
 
