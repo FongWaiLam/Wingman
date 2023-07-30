@@ -44,12 +44,12 @@ public class Product {
     )
     private boolean isActive;
 
-    @OneToMany(
-            mappedBy = "product",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER
-    )
-    private List<RFID> rfidList;
+//    @OneToMany(
+//            mappedBy = "product",
+//            cascade = CascadeType.ALL,
+//            fetch = FetchType.EAGER
+//    )
+//    private List<RFID> rfidList;
 
     @PrePersist
     void createdAt() {

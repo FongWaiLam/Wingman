@@ -157,12 +157,16 @@ async function submitRFIDForm() {
     console.log("submitRFID Form");
     writeToSerialPort(endReadByteArray);
 
+
+    // JSON.stringify doesn't directly work with sets because the data stored in the set is not stored as properties.
     let data = {
-        epcSet: epcSet,
+        epcList: Array.from(epcSet),
         prodId: prodId,
         name: name,
         storeId: storeId,
     };
+
+    console.log("Data to be sent:", data);
 
     fetch(url, { method: 'POST', headers:{'Content-Type' : 'application/json',},
     body: JSON.stringify(data),

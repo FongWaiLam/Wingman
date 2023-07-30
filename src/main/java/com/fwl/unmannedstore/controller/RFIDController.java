@@ -3,10 +3,14 @@ package com.fwl.unmannedstore.controller;
 import com.fwl.unmannedstore.model.Product;
 import com.fwl.unmannedstore.model.RFID;
 import com.fwl.unmannedstore.model.Store;
+import com.fwl.unmannedstore.security.authentication.UserInformation;
 import com.fwl.unmannedstore.service.ProductService;
 import com.fwl.unmannedstore.service.RFIDService;
 import com.fwl.unmannedstore.service.StoreService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +20,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/usms")
+@Slf4j
 public class RFIDController {
     @Autowired
     private RFIDService rfidService;
@@ -36,7 +41,9 @@ public class RFIDController {
     }
 
     @PostMapping("/save_rfid_list")
-    public String saveRFIDList(@RequestBody AddRFIDRequest request) {
+    public ResponseEntity<?> saveRFIDList(@RequestBody AddRFIDRequest request) {
+        log.info("saveRFIDLIst method in Spring");
+        log.info("request.getEpcList()" + request.getEpcList());
         Product product = productService.getProductById(request.getProdId());
         Store store = storeService.getStoreById(request.getStoreId());
 
@@ -44,7 +51,7 @@ public class RFIDController {
             RFID rfid = new RFID(epc,product, false, store);
             rfidService.save(rfid);
         }
-        return "redirect:/usms";
+       return ResponseEntity.ok(new Message("RFID(s) saved!"));
     }
 
     @GetMapping("/delete_rfid/{epc}")

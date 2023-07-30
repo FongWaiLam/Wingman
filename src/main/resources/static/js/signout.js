@@ -1,5 +1,4 @@
 function signOut() {
-    const alert = document.getElementById("alert");
     fetch("/usms/signout", {
         method: "POST",
     })

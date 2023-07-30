@@ -1,5 +1,6 @@
 package com.fwl.unmannedstore.security.controller;
 
+import com.fwl.unmannedstore.controller.Message;
 import com.fwl.unmannedstore.security.authentication.*;
 import com.fwl.unmannedstore.security.config.AuthenticationService;
 import com.fwl.unmannedstore.security.entity.User;

@@ -1,4 +1,4 @@
-package com.fwl.unmannedstore.security.authentication;
+package com.fwl.unmannedstore.controller;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -75,9 +75,9 @@
                                 <a class="nav-link" href="/usms/support">Contact Support</a>
                             </li>
                             <li class="nav-item">
-                                <form>
+                                <form th:action="@{/usms/checkout}" method="get">
                                     <div class="custom-control custom-switch">
-                                        <input type="checkbox" class="custom-control-input" id="switch1">
+                                        <input type="checkbox" class="custom-control-input" id="switch1" checked>
                                         <label class="custom-control-label" for="switch1">Switch to Checkout</label>
                                     </div>
                                 </form>
