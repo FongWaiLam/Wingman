@@ -23,14 +23,32 @@ h1{
     object-fit: cover;
     height: 200px;
                 }
+
+.payment-logo {
+    height: 30px;
+}
 .hidden {
   display: none;
 }
 
-.step {
+.step1 {
+   object-fit: contain;
+   max-width: 400px;
+   max-height: 400px;
+   width: auto;
+   height: auto;
+}
+.step2 {
    object-fit: contain;
    max-width: 100%;
    max-height: 100%;
+   width: auto;
+   height: auto;
+}
+.checkout-now {
+   object-fit: contain;
+   max-width: 60%;
+   max-height: 60%;
    width: auto;
    height: auto;
 }
@@ -48,4 +66,10 @@ h1{
 .btn-warning:hover, .btn-warning:active, .btn-warning:visited {
     background-color: #994823 !important;
     color: white !important;
+}
+.inline-block {
+   display: inline-block;
+}
+.helpdesk {
+    float: right;
 }
