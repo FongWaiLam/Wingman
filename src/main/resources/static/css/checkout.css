@@ -1,0 +1,51 @@
+body {
+    background-color: #C5F0F1
+}
+h1{
+     text-decoration: underline;
+}
+
+.basket {
+    background-color: #FBE6CE;
+}
+.basket-name {
+    background-color: #002060;
+    color: white;
+}
+
+.step {
+    background-color: white
+}
+.logo {
+    height: 150px;
+}
+.powered-by-logo{
+    object-fit: cover;
+    height: 200px;
+                }
+.hidden {
+  display: none;
+}
+
+.step {
+   object-fit: contain;
+   max-width: 100%;
+   max-height: 100%;
+   width: auto;
+   height: auto;
+}
+
+.content-row {
+    height: 450px;
+}
+.footer-row {
+    height: 100px;
+}
+.btn-warning {
+    background-color: #BD582C !important;
+    color: white !important;
+}
+.btn-warning:hover, .btn-warning:active, .btn-warning:visited {
+    background-color: #994823 !important;
+    color: white !important;
+}
