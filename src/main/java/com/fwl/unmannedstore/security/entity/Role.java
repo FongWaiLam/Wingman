@@ -1,6 +1,6 @@
 package com.fwl.unmannedstore.security.entity;
 
 public enum Role {
-    ROLE_ADMIN,
-    ROLE_USER
+    ROLE_ADMIN, // Business Owner
+    ROLE_USER // Managers
 }

@@ -1,5 +1,7 @@
 package com.fwl.unmannedstore.controller;
 
+import com.fwl.unmannedstore.controller.requestResponse.CheckoutScanRequest;
+import com.fwl.unmannedstore.controller.requestResponse.CheckoutScanResponse;
 import com.fwl.unmannedstore.model.Product;
 import com.fwl.unmannedstore.model.RFID;
 import com.fwl.unmannedstore.service.RFIDService;
@@ -15,7 +17,7 @@ public class CheckoutRestController {
     @Autowired
     private RFIDService rfidService;
 
-    @PostMapping("/getProduct")
+    @PostMapping("/get_product")
     public ResponseEntity<CheckoutScanResponse> getProduct(@Valid @RequestBody CheckoutScanRequest request) {
         RFID rfid = rfidService.getRFIDByEPC(request.getEpc());
         Product product = rfid.getProduct();

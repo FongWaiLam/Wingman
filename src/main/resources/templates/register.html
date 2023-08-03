@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{base}">
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+<div layout:fragment="page_content">
+  <!-- content for this page -->
+  <div class="card shadow my-5 mx-5">
+    <div classname="container my-5 p-5 w-50 offset-md-4">
+      <h1 class="text-center pt-5">New Product Register</h1>
+      <form class="col -md-4 my-5 p-5">
+        <div class="row">
+          <div class="col-2"></div>
+          <div class="col-4 mb-3">
+            <label for="firstname" class="form-label">First Name</label>
+            <input type="text" class="form-control" name="firstname" id="firstname">
+          </div>
+          <div class="col-4 mb-3">
+            <label for="lastname" class="form-label">Last Name</label>
+            <input type="text" class="form-control" name="lastname" id="lastname">
+          </div>
+          <div class="col-2"></div>
+        </div>
+        <div class="row">
+          <div class="col-2"></div>
+          <div class="col-5 mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" name="email" id="email">
+          </div>
+          <div class="col-3 mb-3">
+            <label for="role" class="form-label">Role (Please select)</label>
+            <select class="form-control" name="role" id="role">
+              <option selected="true" disabled="disabled" value="">select option</option>
+              <option th:each="r :${allRoles}" th:value="${r}" th:text="${r}">
+            </select>
+          </div>
+          <div class="col-2"></div>
+        </div>
+        <div class="row">
+          <div class="col-2"></div>
+          <div class="col-4 mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" name="password" id="password">
+          </div>
+          <div class="col-4 mb-3">
+            <label for="confirmPassword" class="form-label">Confirm Password</label>
+            <input type="confirmPassword" class="form-control" name="password" id="confirmPassword">
+            <div id="warn"></div>
+          </div>
+          <div class="col-2"></div>
+        </div>
+        <div class="row">
+          <div class="col-2"></div>
+          <div class="col-4 mb-3">
+            <label for="photoFile" class="form-label">Profile Picture</label>
+            <input type="file" id="photoFile" class="form-control" name="photoFile" onchange="preview(event,'photo-preview');">
+          </div>
+          <div class="col-4 mb-3">
+            <div id="photo-preview"></div>
+          </div>
+          <div class="col-2"></div>
+        </div>
+        <center><button type="button" id="form-submission" class="btn btn-primary ">Submit</button></center>
+      </form>
+    </div>
+  </div>
+</div>
+<th:block layout:fragment="scripts">
+  <!-- add any scripts related to this page -->
+
+  <script src="/js/photo-preview.js"></script>
+  <script src="/js/register.js"></script>
+  <script src="/js/confirmPassword.js"></script>
+
+</th:block>
+</body>
+</html>

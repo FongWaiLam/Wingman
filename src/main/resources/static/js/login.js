@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function submitForm(event) {
+    console.log("Login form submitted");
     let email = document.getElementById('email').value;
     let password = document.getElementById('password').value;
     let data = {
@@ -32,14 +33,14 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch("/usms/signin", {
         method: "POST",
         headers: {
-            "Content-Type": "application/json", // Set the Content-Type header to application/json
+            "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
     })
     .then(response => {
         if (response.ok) {
-            // Handle successful response (e.g., redirect to a new page)
-            window.location.href = "/usms"; // Replace "/success" with the desired URL
+        console.log("User Logged in: " + response.json());
+            window.location.href = "/usms";
         } else {
             // Handle error response (e.g., display an error message)
             alert("Login failed. Please try again.");

@@ -18,8 +18,8 @@ public class SalesRecord {
     private int salesId;
     @OneToOne
     @JoinColumn(
-            name = "payId",
-            referencedColumnName = "payId"
+            name = "paymentIntentId",
+            referencedColumnName = "paymentIntentId"
     )
     private Payment payment;
     @ManyToOne
@@ -29,7 +29,7 @@ public class SalesRecord {
     )
     private Store store;
     private Timestamp transactionDateTime;
-    private double amount;
+    private long amount;
 
     @OneToOne(
             cascade = CascadeType.ALL
@@ -40,8 +40,8 @@ public class SalesRecord {
     )
     private Cart cart;
 
-    @PrePersist
-    void createdAt() {
-        this.transactionDateTime = new Timestamp(System.currentTimeMillis());
-    }
+//    @PrePersist
+//    void createdAt() {
+//        this.transactionDateTime = new Timestamp(System.currentTimeMillis());
+//    }
 }

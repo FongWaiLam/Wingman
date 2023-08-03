@@ -6,18 +6,18 @@ const hexByteString = "bb0027000322ffff4a7e";
 const byteArray = hexByteString.match(/.{1,2}/g).map(byte => parseInt(byte, 16));
 
 const startCheckout = document.getElementById('start-checkout');
-let cardDetectBtn = document.getElementById("card-detect-button");
+let cardDetectPayBtn = document.getElementById("card-detect-pay-button");
 let payExitBtn = document.getElementById("pay-exit-button");
 
 // Once the DOM has all loaded, attach event listeners
     document.addEventListener('DOMContentLoaded', () => {
+
     // Add Event Listeners to perform 3 steps
     startCheckout.addEventListener('click', step1Performed);
-    cardDetectBtn.addEventListener('click', step2Performed);
-    payExitBtn.addEventListener('click', step3Performed);
-
-    console.log("Testing RFID Web Serial API");
-    console.log("byteArray: " , byteArray);
+    payExitBtn.addEventListener('click', step2Performed);
+    cardDetectPayBtn.addEventListener('click', step3Performed);
+//    console.log("Testing RFID Web Serial API");
+//    console.log("byteArray: " , byteArray);
 
     // Check if serial is supported or not
     const serialNotSupported = document.getElementById('serialNotSupported');
@@ -29,11 +29,12 @@ const processRow = document.getElementById('process');
 const processInstructRow = document.getElementById('process-instruction');
 // Step 1 Procedure GUI
 function step1Performed() {
+    connect();
     startRow.classList.add('hidden');
     processInstructRow.classList.remove('hidden');
     processRow.classList.remove('hidden');
-    // Receive signal from payment terminal - credit card
-    stripeCreditCardScan();
+    // Connect to payment terminal
+    stripeConnect();
 }
 
 const processInstruct1 = document.getElementById('step1-instruction');
@@ -42,7 +43,7 @@ const processImg1 = document.getElementById('step1-img');
 const processImg2 = document.getElementById('step2-img');
 // Step 2 Procedure GUI
 function step2Performed() {
-    connect();
+
     processInstruct1.classList.add('hidden');
     processInstruct2.classList.remove('hidden');
     processImg1.classList.add('hidden');
@@ -53,6 +54,8 @@ const processImg3 = document.getElementById('step3-img');
 const alertStep = document.getElementById('instruction');
 // Step 3 Procedure GUI
 function step3Performed() {
+    // Perform payment creation and capture
+    createAndCapturePayment()
     // Post Request: Update the payment and sales record
     alertStep.classList.add('hidden');
     processImg2.classList.add('hidden');
@@ -147,7 +150,7 @@ let prodIdDisplay = new Set;
 let previousDisplaySetSize = 0;
 
 function getProduct(epc) {
-let url = '/checkout/getProduct';
+let url = '/checkout/get_product';
 
 // JSON object
 let data = { epc: epc };
@@ -219,5 +222,47 @@ function updateQuantity (prodId) {
     quantityCell.textContent = quantity;
 }
 
+
+const urlParams = new URLSearchParams(window.location.search);
+const storeIdParam = urlParams.get('store_id');
+
+
 function updateSalesPaymentRecord() {
+let url = '/update_pay_sales_record';
+
+// JSON object
+let data = {
+    epc: epc,
+    amount: amount,
+    payId: payId,
+    isSuccessful: isSuccessful,
+    storeId: storeIdParam,
+    };
+console.log(epc);
+
+fetch(url, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(data),
+})
+.then(response => response.json()) // Parse the response as JSON
+.then(data => {
+    console.log('Product Info:', data);
+    scannedProducts.push(data);
+    prodIdDisplay.add(data.prodId);
+    if (prodIdDisplay.size != (previousDisplaySetSize + 1)) {
+        // Update (Add 1 ) the quantity column of the row with this prodId
+        updateQuantity(data.prodId);
+    } else {
+        // Create a new row for this product with quantity 1
+        updateBasket(data);
+        previousDisplaySetSize++
+    }
+})
+.catch((error) => {
+  console.error('Error:', error);
+});
+
 }

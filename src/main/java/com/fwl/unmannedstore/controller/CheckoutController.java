@@ -21,11 +21,5 @@ public class CheckoutController {
     }
 
 
-    @PostMapping("/payment_success")
-    public String addBook(@ModelAttribute List<RFID> rfidList) {
-        for (RFID rfid: rfidList) {
-            rfidService.sold(rfid);
-        }
-        return"redirect:/checkout";
-    }
+
 }

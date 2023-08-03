@@ -1,15 +1,15 @@
 package com.fwl.unmannedstore.controller;
 
+import com.fwl.unmannedstore.controller.requestResponse.AddRFIDRequest;
+import com.fwl.unmannedstore.controller.requestResponse.Message;
 import com.fwl.unmannedstore.model.Product;
 import com.fwl.unmannedstore.model.RFID;
 import com.fwl.unmannedstore.model.Store;
-import com.fwl.unmannedstore.security.authentication.UserInformation;
 import com.fwl.unmannedstore.service.ProductService;
 import com.fwl.unmannedstore.service.RFIDService;
 import com.fwl.unmannedstore.service.StoreService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

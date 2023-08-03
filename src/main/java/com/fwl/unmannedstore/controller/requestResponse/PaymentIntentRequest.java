@@ -1,4 +1,4 @@
-package com.fwl.unmannedstore.controller;
+package com.fwl.unmannedstore.controller.requestResponse;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CheckoutScanRequest {
+public class PaymentIntentRequest {
     @NotBlank
-    private String epc;
+    private String paymentIntentId;
+    @NotBlank
+    private long amount;
 }

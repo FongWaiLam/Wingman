@@ -1,9 +1,6 @@
 package com.fwl.unmannedstore.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.PrePersist;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,9 +13,10 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "payment", indexes = {@Index(name = "payment_intent_id_index", columnList = "paymentIntentId")})
 public class Payment {
     @Id
-    private int payId; // primary key
+    private String paymentIntentId; // primary key Assigned by Stripe
     private Timestamp pay_date_time;
     @OneToOne(
             mappedBy = "payment"

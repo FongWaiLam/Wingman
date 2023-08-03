@@ -17,20 +17,20 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Entity
+@Table(name = "user", indexes = {@Index(name = "email_index", columnList = "email")})
 public class User implements UserDetails {
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO)
     private Integer id;
     private String firstname;
     private String lastname;
+    @Column(unique = true)
     private String email;
     private String password;
+    private String profile; // path to image
     // enum
     @Enumerated(EnumType.STRING)
     private Role role;
-
-//    @OneToMany(mappedBy = "user")
-//    private List<Token> tokens;
 
     // Lombok has a getter for password
     @Override

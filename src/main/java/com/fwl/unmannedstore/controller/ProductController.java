@@ -78,7 +78,7 @@ public class ProductController {
                 }
             }
         } catch (IOException e) {
-            log.error("Photo " + photoFile.getOriginalFilename() + " cannot be saved.");
+            log.error("Product photo " + photoFile.getOriginalFilename() + " cannot be saved.");
         }
 
             for (MultipartFile photo: photoFiles) {

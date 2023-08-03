@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,6 @@ public class AuthenticationService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
     public User register(RegisterRequest request) {
@@ -31,30 +31,23 @@ public class AuthenticationService {
                 .build();
         userRepository.save(user);
         return user;
-
-//        var jwtToken = jwtService.generateToken(user);
-//        return AuthenticationResponse.builder()
-//                .token(jwtToken)
-//                .build();
     }
 
     // AuthenticateManager has a method to authenticate the user
     // If the username or password is incorrect, an exception will be thrown.
     public Authentication authenticate(AuthenticationRequest request) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                request.getEmail(), request.getPassword()
-        ));
+        try {
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                    request.getEmail(), request.getPassword()));
+            return authentication;
+        } catch (AuthenticationException e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
 
-        return authentication;
-
-//        // If not exception is thrown, the user is authenticated (username and password are correct)
-//        var user = userRepository.findByEmail(request.getEmail()).orElseThrow();
-//
-//        // After getting the user, generate the jwt token
-//        var jwtToken = jwtService.generateToken(user);
-//        return AuthenticationResponse.builder()
-//                .token(jwtToken)
-//                .build();
-
+    // Save user
+    public void save(User user) {
+        userRepository.save(user);
     }
 }

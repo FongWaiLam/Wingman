@@ -10,6 +10,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -80,7 +81,7 @@ public class WebSecurityConfiguration {
         http
                 .authorizeHttpRequests(authConfig -> {
                     authConfig.requestMatchers(HttpMethod.GET,  "/checkout", "/usms/login", "/error", "/css/**", "/js/**", "/images/**", "/product_photos").permitAll();
-                    authConfig.requestMatchers(HttpMethod.POST,   "/usms/signin", "/usms/logout", "/checkout/getProduct").permitAll();
+                    authConfig.requestMatchers(HttpMethod.POST,   "/usms/signin", "/usms/logout", "/checkout/get_product", "/update_pay_sales_record").permitAll();
 //                    authConfig.requestMatchers(HttpMethod.GET, "/usms").hasRole("USER");
 //                    authConfig.requestMatchers(HttpMethod.GET, "/admin").hasRole("ADMIN");
                     authConfig.anyRequest().authenticated();

@@ -1,19 +1,19 @@
-package com.fwl.unmannedstore.controller;
+package com.fwl.unmannedstore.controller.requestResponse;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddRFIDRequest {
-    private List<String> epcList;
+public class CheckoutScanResponse {
+    private String epc;
     private int prodId;
     private String name;
-    private int storeId;
+    private double price;
+    private String photo;
+
 }

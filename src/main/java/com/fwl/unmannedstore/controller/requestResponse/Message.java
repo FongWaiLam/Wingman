@@ -1,4 +1,4 @@
-package com.fwl.unmannedstore.controller;
+package com.fwl.unmannedstore.controller.requestResponse;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
