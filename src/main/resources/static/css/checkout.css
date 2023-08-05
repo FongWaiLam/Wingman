@@ -73,3 +73,8 @@ h1{
 .helpdesk {
     float: right;
 }
+
+hr.rounded {
+  border-top: 8px solid #bbb;
+  border-radius: 5px;
+}

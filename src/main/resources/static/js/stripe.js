@@ -6,7 +6,7 @@ var terminal = StripeTerminal.create({
 });
 
 var discoveredReaders;
-var paymentIntentId;
+
 
 function unexpectedDisconnect() {
   console.log("Disconnected from reader")
@@ -18,8 +18,7 @@ function unexpectedDisconnect() {
 }
 
 function fetchConnectionToken() {
-  // Do not cache or hardcode the ConnectionToken. The SDK manages the ConnectionToken's lifecycle.
-  return fetch('/checkout/payment/connection_token', { method: "POST" })
+  return fetch('/connection_token', { method: "POST" })
     .then(function(response) {
       return response.json();
     })
@@ -29,37 +28,66 @@ function fetchConnectionToken() {
 }
 
 // Handler for a "Discover readers" button
-function discoverReaderHandler() {
+async function discoverReaderHandler() {
+    console.log("discoverReaderHandler() entered");
   var config = {simulated: true};
-  terminal.discoverReaders(config).then(function(discoverResult) {
-    if (discoverResult.error) {
-      console.log('Failed to discover: ', discoverResult.error);
-    } else if (discoverResult.discoveredReaders.length === 0) {
-        console.log('No available readers.');
-    } else {
-        discoveredReaders = discoverResult.discoveredReaders;
-        log('terminal.discoverReaders', discoveredReaders);
-    }
-  });
+      return terminal.discoverReaders(config).then(function(discoverResult) {
+          if (discoverResult.error) {
+              console.log('Failed to discover: ', discoverResult.error);
+              return discoverResult;
+          } else if (discoverResult.discoveredReaders.length === 0) {
+              console.log('No available readers.');
+              return discoverResult;
+          } else {
+              discoveredReaders = discoverResult.discoveredReaders;
+              console.log('terminal.discoverReaders', discoveredReaders);
+              return discoverResult;
+          }
+      });
+
+//  terminal.discoverReaders(config).then(function(discoverResult) {
+//    if (discoverResult.error) {
+//      console.log('Failed to discover: ', discoverResult.error);
+//    } else if (discoverResult.discoveredReaders.length === 0) {
+//        console.log('No available readers.');
+//    } else {
+//        discoveredReaders = discoverResult.discoveredReaders;
+//        console.log('terminal.discoverReaders', discoveredReaders);
+//    }
+//    console.log('discoverResult', discoverResult);
+//    return discoverResult;
+//  });
 }
 
-// Handler for a "Connect Reader" button
-function connectReaderHandler(discoveredReaders) {
+
+async function connectReaderHandler(discoveredReaders) {
   // Just select the first reader here.
   var selectedReader = discoveredReaders[0];
-  terminal.connectReader(selectedReader).then(function(connectResult) {
-    if (connectResult.error) {
-      console.log('Failed to connect: ', connectResult.error);
-    } else {
-        console.log('Connected to reader: ', connectResult.reader.label);
-        log('terminal.connectReader', connectResult)
-    }
-  });
+      return terminal.connectReader(selectedReader).then(function(connectResult) {
+          if (connectResult.error) {
+              console.log('Failed to connect: ', connectResult.error);
+              return connectResult;
+          } else {
+              console.log('Connected to reader: ', connectResult.reader.label);
+              console.log('terminal.connectReader', connectResult);
+              return connectResult;
+          }
+      });
+
+//  terminal.connectReader(selectedReader).then(function(connectResult) {
+//    if (connectResult.error) {
+//      console.log('Failed to connect: ', connectResult.error);
+//    } else {
+//        console.log('Connected to reader: ', connectResult.reader.label);
+//        console.log('terminal.connectReader', connectResult)
+//    }
+//    return connectResult;
+//  });
 }
 
-function fetchPaymentIntentClientSecret(amount) {
+async function fetchPaymentIntentClientSecret(amount) {
   const bodyContent = JSON.stringify({ amount: amount });
-  return fetch('/checkout/payment/create_payment_intent', {
+  return fetch('/create_payment_intent', {
     method: "POST",
     headers: {
       'Content-Type': 'application/json'
@@ -74,43 +102,108 @@ function fetchPaymentIntentClientSecret(amount) {
   });
 }
 
-function collectPayment(amount) {
-  fetchPaymentIntentClientSecret(amount).then(function(client_secret) {
-      terminal.setSimulatorConfiguration({testCardNumber: '4242424242424242'});
-      terminal.collectPaymentMethod(client_secret).then(function(result) {
-      if (result.error) {
-        // Placeholder for handling result.error
-        console.log("Unable to create payment for amount: " + amount);
-      } else {
-          console.log('terminal.collectPaymentMethod', result.paymentIntent);
-          terminal.processPayment(result.paymentIntent).then(function(result) {
-          if (result.error) {
-            console.log(result.error)
-          } else if (result.paymentIntent) {
-              paymentIntentId = result.paymentIntent.id;
-              console.log('terminal.processPayment', result.paymentIntent);
-          }
-        });
-      }
-    });
-  });
+async function collectPayment(amount) {
+  try {
+    const client_secret = await fetchPaymentIntentClientSecret(amount);
+    terminal.setSimulatorConfiguration({testCardNumber: '4242424242424242'});
+    const collectResult = await terminal.collectPaymentMethod(client_secret);
+
+    if (collectResult.error) {
+      console.log("Unable to create payment for amount: " + amount);
+      return; // or throw an error here if this is an exceptional condition
+    }
+
+    console.log('terminal.collectPaymentMethod', collectResult.paymentIntent);
+    const processResult = await terminal.processPayment(collectResult.paymentIntent);
+
+    if (processResult.error) {
+      console.log(processResult.error);
+      return processResult;
+    } else if (processResult.paymentIntent) {
+      console.log('terminal.processPayment', processResult.paymentIntent);
+      return processResult.paymentIntent.id;
+    }
+  } catch (error) {
+    console.log("Error in collectPayment: ", error);
+    throw error;
+  }
 }
 
-function capture(paymentIntentId) {
-  return fetch('/checkout/payment/capture_payment_intent', {
-    method: "POST",
-    headers: {
-        'Content-Type': 'application/json'
-    },
-      body: JSON.stringify({"payment_intent_id": paymentIntentId})
-  })
-  .then(function(response) {
-    return response.json();
-  })
-  .then(function(data) {
+//async function collectPayment(amount) {
+//let paymentIntentId;
+//  fetchPaymentIntentClientSecret(amount).then(function(client_secret) {
+//      terminal.setSimulatorConfiguration({testCardNumber: '4242424242424242'});
+//      terminal.collectPaymentMethod(client_secret).then(function(result) {
+//      if (result.error) {
+//        // Placeholder for handling result.error
+//        console.log("Unable to create payment for amount: " + amount);
+//      } else {
+//          console.log('terminal.collectPaymentMethod', result.paymentIntent);
+//          terminal.processPayment(result.paymentIntent).then(function(result) {
+//          if (result.error) {
+//            console.log(result.error)
+//            return result;
+//          } else if (result.paymentIntent) {
+//              paymentIntentId = result.paymentIntent.id;
+//              console.log('terminal.processPayment', result.paymentIntent);
+////              return result;
+//              return paymentIntentId;
+//          }
+//        });
+//      }
+//    });
+//  });
+//}
+
+async function capture(paymentIntentId) {
+  console.log("Entered capture(paymentIntentId): paymentIntentId " + paymentIntentId);
+  try {
+    const response = await fetch('/capture_payment_intent', {
+      method: "POST",
+      headers: {
+          'Content-Type': 'application/json'
+      },
+        body: JSON.stringify({"paymentIntentId": paymentIntentId})
+    });
+
+    // Check if the response is ok (status in the range 200-299)
+    if (!response.ok) {
+      console.error("Server responded with status", response.status);
+      // Here you could throw an error or return an error object,
+      // depending on how you want to handle this situation.
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log("capture(paymentIntentId): ", data);
     console.log('server.capture', data);
-  });
+    return paymentIntentId;
+  } catch (error) {
+    console.log("Error in capture: ", error);
+    throw error;
+  }
 }
+
+
+
+//async function capture(paymentIntentId) {
+//console.log("Entered capture(paymentIntentId): paymentIntentId" + paymentIntentId);
+//  return fetch('/capture_payment_intent', {
+//    method: "POST",
+//    headers: {
+//        'Content-Type': 'application/json'
+//    },
+//      body: JSON.stringify({"payment_intent_id": paymentIntentId})
+//  })
+//  .then(function(response) {
+//  console.log("capture(paymentIntentId): return " + response.json())
+//    return response.json();
+//  })
+//  .then(function(data) {
+//    console.log('server.capture', data);
+//    return paymentIntentId;
+//  });
+//}
 
 
 //const discoverButton = document.getElementById('discover-button');

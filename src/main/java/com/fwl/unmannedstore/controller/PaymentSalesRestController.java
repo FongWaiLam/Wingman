@@ -4,6 +4,7 @@ import com.fwl.unmannedstore.controller.requestResponse.Message;
 import com.fwl.unmannedstore.controller.requestResponse.PaymentSalesRequest;
 import com.fwl.unmannedstore.model.*;
 import com.fwl.unmannedstore.service.*;
+import jakarta.persistence.EntityManager;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,32 +23,33 @@ public class PaymentSalesRestController {
     @Autowired
     private RFIDService rfidService;
     @Autowired
-    private ProductService productService;
-    @Autowired
     private PaymentService paymentService;
     @Autowired
     private StoreService storeService;
     @Autowired
     private SalesRecordService salesService;
 
+    @Autowired
+    private EntityManager entityManager;
+
     @PostMapping("/update_pay_sales_record")
-    public ResponseEntity<Message> getProduct(@Valid @RequestBody PaymentSalesRequest request) {
+    public ResponseEntity<Message> getProduct(@RequestBody PaymentSalesRequest request) {
         // Get RFID List
         List<RFID> rfidList = getRFIDList(request.getEpcList());
         // Create a new Cart for the sold item
         Cart cart = new Cart();
         cart.setRfidList(rfidList);
-        cart.setAmount(request.getAmount());
         cartService.save(cart);
         log.info("cart ID: " + cart.getCartId());
         // Update Sold state of RFID
         updateRFIDSoldState(rfidList);
         // Update Payment Record
         Payment payment = new Payment();
-        payment.setSuccessful(true);  // TODO: Receive state from terminal
+        payment.setSuccessful(request.isSuccessful());
         payment.setPaymentIntentId(request.getPaymentIntentId());
+        entityManager.persist(payment);
         paymentService.save(payment);
-        log.info("pay ID: " + cart.getCartId());
+        log.info("pay ID: " + payment.getPaymentIntentId());
         // Get Store
         Store store = storeService.getStoreById(request.getStoreId());
         // Update Sales Record
@@ -55,8 +57,8 @@ public class PaymentSalesRestController {
         salesRecord.setPayment(payment);
         // All API requests expect amounts to be provided in a currency’s smallest unit. For example, to charge 10 USD, provide an amount value of 1000 (that is, 1000 cents).
         // Stripe uses the smallest 0.01p = 1 unit
-        int amountInPence = (int)request.getAmount()* 100;
-        salesRecord.setAmount(amountInPence);
+        salesRecord.setAmountInPence(request.getAmountInPence());
+        log.info("payment.getPay_date_time(): " + payment.getPay_date_time());
         salesRecord.setTransactionDateTime(payment.getPay_date_time());
         salesRecord.setStore(store);
         salesRecord.setCart(cart);

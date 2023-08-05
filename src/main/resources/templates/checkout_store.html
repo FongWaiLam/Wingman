@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{checkout_base}">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div layout:fragment="instruction">
+    <!-- Content from other pages which decorate using this template -->
+</div>
+<div layout:fragment="page_content">
+    <!-- content for this page -->
+    <div id="start" class="row justify-content-start content-row">
+        <div class="card py-2 px-2 basket h-100">
+            <h3 class="mx-auto mt-5">Manager,</h3>
+            <h4 class="mx-auto mt-1 mb-5">please select the checkout page for your store.</h4>
+            <!-- start-checkout button -->
+            <div class="mx-auto my-5">
+                <a th:each="s :${storeList}" th:href="@{/checkout/{id} (id=${s.storeId})}" th:text="${s.name} + '   [ID : '+ ${s.storeId} +']'" class="btn btn-primary mx-5 mx-auto my-2 px-5 py-3" type="button"></a>
+            </div>
+            <!-- display payment and checkout icons -->
+            <div class="mx-auto my-auto">
+                <img class="img-fluid payment-logo mx-auto my-2 inline-block" src = "/images/stripe-icon.svg" alt="stripe payment"/>
+                <img class="img-fluid payment-logo mx-auto my-2 inline-block" src = "/images/visa-icon.svg" alt="visa payment via stripe"/>
+                <img class="img-fluid payment-logo mx-auto my-2 inline-block" src = "/images/master-card-icon.svg" alt="master payment via stripe"/>
+                <img class="img-fluid payment-logo mx-auto my-2 inline-block" src = "/images/rfid-icon.svg" alt="rfid checkout"/>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block layout:fragment="scripts">
+    <!-- add any scripts related to this page -->
+</th:block>
+</body>
+</html>

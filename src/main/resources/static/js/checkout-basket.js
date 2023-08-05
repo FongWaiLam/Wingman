@@ -2,8 +2,12 @@ let port;
 let reader;
 
 // Start Multi-read signal
-const hexByteString = "bb0027000322ffff4a7e";
-const byteArray = hexByteString.match(/.{1,2}/g).map(byte => parseInt(byte, 16));
+const startReadHexByteString = "bb0027000322ffff4a7e";
+const startReadByteArray = startReadHexByteString.match(/.{1,2}/g).map(byte => parseInt(byte, 16));
+
+// End Multi-read signal
+const endReadHexByteString = "bb00280000287e";
+const endReadByteArray = endReadHexByteString.match(/.{1,2}/g).map(byte => parseInt(byte, 16));
 
 const startCheckout = document.getElementById('start-checkout');
 let cardDetectPayBtn = document.getElementById("card-detect-pay-button");
@@ -16,8 +20,6 @@ let payExitBtn = document.getElementById("pay-exit-button");
     startCheckout.addEventListener('click', step1Performed);
     payExitBtn.addEventListener('click', step2Performed);
     cardDetectPayBtn.addEventListener('click', step3Performed);
-//    console.log("Testing RFID Web Serial API");
-//    console.log("byteArray: " , byteArray);
 
     // Check if serial is supported or not
     const serialNotSupported = document.getElementById('serialNotSupported');
@@ -53,18 +55,44 @@ function step2Performed() {
 const processImg3 = document.getElementById('step3-img');
 const alertStep = document.getElementById('instruction');
 // Step 3 Procedure GUI
-function step3Performed() {
-    // Perform payment creation and capture
-    createAndCapturePayment()
-    // Post Request: Update the payment and sales record
-    alertStep.classList.add('hidden');
-    processImg2.classList.add('hidden');
-    processImg3.classList.remove('hidden');
+async function step3Performed() {
 
-    var delayInMilliseconds = 10000; //10 second
-    setTimeout(function() {
-    window.location.reload();
-    }, delayInMilliseconds);
+    // Disconnect rfid reader
+    writeToSerialPort(endReadByteArray);
+
+    let amountInPence = calTotalAmount();
+    let paymentIntentId = await collectPayment(amountInPence);
+    paymentIntentId = await capture(paymentIntentId);
+
+    // Perform payment creation and capture
+//    let paymentIntentId = await createAndCapturePayment();
+        // Post Request: Update the payment and sales record
+        if(typeof paymentIntentId != "undefined") {
+            alertStep.classList.add('hidden');
+            processImg2.classList.add('hidden');
+            processImg3.classList.remove('hidden');
+
+            updateSalesPaymentRecord(paymentIntentId);
+        }
+
+//    createAndCapturePayment().then(function(paymentIntentId) {
+//        // Post Request: Update the payment and sales record
+//        if(typeof paymentIntentId != "undefined") {
+//            alertStep.classList.add('hidden');
+//            processImg2.classList.add('hidden');
+//            processImg3.classList.remove('hidden');
+//
+//            updateSalesPaymentRecord(paymentIntentId);
+//        }
+//    }).catch(function(error) {
+//    console.err("step3Performed() Error: " + error)
+//    });
+
+
+//    var delayInMilliseconds = 10000; //10 second
+//    setTimeout(function() {
+//    window.location.reload();
+//    }, delayInMilliseconds);
 
 }
 
@@ -80,7 +108,7 @@ async function connect() {
   // - Wait for the port to open.
   await port.open({ baudRate: 115200 });
   console.log("port" + port);
-  writeToSerialPort(byteArray);
+  writeToSerialPort(startReadByteArray);
   readLoop();
 }
 
@@ -148,8 +176,10 @@ function uint8ArrayToHexArray(uint8Array) {
 let scannedProducts = [];
 let prodIdDisplay = new Set;
 let previousDisplaySetSize = 0;
+let total = document.getElementById("total");
 
 function getProduct(epc) {
+
 let url = '/checkout/get_product';
 
 // JSON object
@@ -176,6 +206,10 @@ fetch(url, {
         updateBasket(data);
         previousDisplaySetSize++
     }
+    // Update total
+    let totalAmount = (calTotalAmount() / (100.0)).toFixed(2);
+    console.log("total: " + totalAmount);
+    total.innerHTML = "Total(£): " + totalAmount;
 })
 .catch((error) => {
   console.error('Error:', error);
@@ -223,22 +257,22 @@ function updateQuantity (prodId) {
 }
 
 
-const urlParams = new URLSearchParams(window.location.search);
-const storeIdParam = urlParams.get('store_id');
+const currentURL = window.location.href
+const myArray = currentURL.split("/");
+const storeId = myArray[myArray.length-1];
 
-
-function updateSalesPaymentRecord() {
+function updateSalesPaymentRecord(paymentIntentId) {
 let url = '/update_pay_sales_record';
-
+let amountInPence = calTotalAmount()
 // JSON object
 let data = {
-    epc: epc,
-    amount: amount,
-    payId: payId,
-    isSuccessful: isSuccessful,
-    storeId: storeIdParam,
+    epcList: Array.from(epcSet),
+    amountInPence: amountInPence,
+    paymentIntentId: paymentIntentId,
+    isSuccessful: true,
+    storeId: storeId,
     };
-console.log(epc);
+console.log("paymentIntentId: " + paymentIntentId);
 
 fetch(url, {
   method: 'POST',
@@ -248,21 +282,10 @@ fetch(url, {
   body: JSON.stringify(data),
 })
 .then(response => response.json()) // Parse the response as JSON
-.then(data => {
-    console.log('Product Info:', data);
-    scannedProducts.push(data);
-    prodIdDisplay.add(data.prodId);
-    if (prodIdDisplay.size != (previousDisplaySetSize + 1)) {
-        // Update (Add 1 ) the quantity column of the row with this prodId
-        updateQuantity(data.prodId);
-    } else {
-        // Create a new row for this product with quantity 1
-        updateBasket(data);
-        previousDisplaySetSize++
-    }
+.then(message => {
+    console.log('Update Sales, Cart and Payment record:', message.message);
 })
 .catch((error) => {
   console.error('Error:', error);
 });
-
 }

@@ -15,6 +15,7 @@ import java.sql.Timestamp;
 @Builder
 public class SalesRecord {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int salesId;
     @OneToOne
     @JoinColumn(
@@ -29,7 +30,7 @@ public class SalesRecord {
     )
     private Store store;
     private Timestamp transactionDateTime;
-    private long amount;
+    private long amountInPence;
 
     @OneToOne(
             cascade = CascadeType.ALL

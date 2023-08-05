@@ -80,8 +80,8 @@ public class WebSecurityConfiguration {
         // After logged in, a JWTCookie will be sent to the browser
         http
                 .authorizeHttpRequests(authConfig -> {
-                    authConfig.requestMatchers(HttpMethod.GET,  "/checkout", "/usms/login", "/error", "/css/**", "/js/**", "/images/**", "/product_photos").permitAll();
-                    authConfig.requestMatchers(HttpMethod.POST,   "/usms/signin", "/usms/logout", "/checkout/get_product", "/update_pay_sales_record").permitAll();
+                    authConfig.requestMatchers(HttpMethod.GET,  "/checkout", "/checkout/*", "/usms/login", "/error", "/css/**", "/js/**", "/images/**", "/product_photos").permitAll();
+                    authConfig.requestMatchers(HttpMethod.POST,   "/usms/signin", "/usms/logout", "/connection_token", "/capture_payment_intent" ,"/create_payment_intent" ,"/checkout/get_product", "/update_pay_sales_record").permitAll();
 //                    authConfig.requestMatchers(HttpMethod.GET, "/usms").hasRole("USER");
 //                    authConfig.requestMatchers(HttpMethod.GET, "/admin").hasRole("ADMIN");
                     authConfig.anyRequest().authenticated();

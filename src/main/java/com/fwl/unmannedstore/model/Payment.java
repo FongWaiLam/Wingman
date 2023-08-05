@@ -13,9 +13,13 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "payment", indexes = {@Index(name = "payment_intent_id_index", columnList = "paymentIntentId")})
+//@Table(name = "payment", indexes = {@Index(name = "payment_intent_id_index", columnList = "paymentIntentId")})
 public class Payment {
+
     @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private int payId;
+//    @Column(unique = true, nullable = false)
     private String paymentIntentId; // primary key Assigned by Stripe
     private Timestamp pay_date_time;
     @OneToOne(

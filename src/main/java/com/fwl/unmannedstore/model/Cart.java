@@ -18,10 +18,10 @@ import java.util.List;
 @Builder
 public class Cart{
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int cartId; // primary key
     @OneToMany
     private List<RFID> rfidList;
-    private double amount;
 
     public void addRFID(RFID rfid) {
         if (rfidList == null) {

@@ -3,6 +3,7 @@ package com.fwl.unmannedstore.controller;
 import com.fwl.unmannedstore.controller.requestResponse.PaymentIntentRequest;
 import com.fwl.unmannedstore.service.PaymentService;
 import com.google.gson.Gson;
+import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
 import com.stripe.model.terminal.ConnectionToken;
@@ -11,37 +12,45 @@ import com.stripe.param.PaymentIntentCreateParams;
 import com.stripe.param.terminal.ConnectionTokenCreateParams;
 import com.stripe.param.terminal.LocationCreateParams;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@Controller
+@RestController
 @Getter
-public class PaymentController {
+@Slf4j
+public class PaymentRestController {
     @Autowired
     private PaymentService paymentService;
+
+    static {
+        Stripe.apiKey = "sk_test_51NJ0KXCeKXiTFd6o4C23MhkmVMVPaPGpEF4jLSH9NJOftMu0oJag4GszFCQyFC6dQ1T3YQ0a60nR8wcwtzFvFa5T00z5El6iWG";
+    }
 
     private static Gson gson = new Gson();
 
     // Connect to terminal
-    @PostMapping("/checkout/payment/connection_token")
+    @PostMapping("/connection_token")
     public String connectToken() throws StripeException {
+        log.info("connectToken() entered");
         ConnectionTokenCreateParams params = ConnectionTokenCreateParams.builder()
                 .build();
 
         ConnectionToken connectionToken = ConnectionToken.create(params);
 
         Map<String, String> map = new HashMap();
+        log.info("connectionToken.getSecret(): " + connectionToken.getSecret());
         map.put("secret", connectionToken.getSecret());
         return gson.toJson(map);
     }
 
 
-    @PostMapping("/checkout/payment/create_payment_intent")
+    @PostMapping("/create_payment_intent")
     public String createPaymentIntent(@RequestBody PaymentIntentRequest paymentIntentRequest) throws StripeException {
 
         // For Terminal payments, the 'payment_method_types' parameter must include
@@ -64,10 +73,11 @@ public class PaymentController {
     }
 
 
-    @PostMapping("/checkout/payment/capture_payment_intent")
+    @PostMapping("/capture_payment_intent")
     public String capturePaymentIntent(@RequestBody PaymentIntentRequest paymentIntentRequest) throws StripeException {
+        log.info("PaymentIntentRequest: " + paymentIntentRequest);
         PaymentIntent intent = PaymentIntent.retrieve(paymentIntentRequest.getPaymentIntentId());
-
+        log.info("Intent: " + intent);
         // Capture amount smaller than the original create amount
 //        PaymentIntentCaptureParams params =
 //                PaymentIntentCaptureParams.builder()

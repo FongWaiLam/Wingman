@@ -11,8 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PaymentIntentRequest {
-    @NotBlank
     private String paymentIntentId;
-    @NotBlank
     private long amount;
 }
