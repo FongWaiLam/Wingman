@@ -19,7 +19,7 @@
           <th scope="col">Name</th>
           <th scope="col">Price (£)</th>
           <th scope="col">Photo</th>
-          <th scope="col">Quantity</th>
+<!--          <th scope="col">Quantity</th>-->
           <th scope="col">Created On</th>
           <th scope="col">Last Updated On</th>
           <th scope="col">Last Updated By</th>
@@ -35,7 +35,7 @@
           <td th:text="${p.name}"></td>
           <td th:text="${p.price}"></td>
           <td><img th:src="@{https://unmannedstore.blob.core.windows.net/wingman/product/{id}/{photo}(id=${p.prodId}, photo=${p.photo})}" class="thumbnail"/></td>
-          <td th:text="${p.quantity}"></td>
+<!--          <td th:text="${p.quantity}"></td>-->
           <td th:text="${p.creation_date}"></td>
           <td th:text="${p.last_updated}"></td>
           <td th:text="${p.updated_by_user?.username}">No Record</td>

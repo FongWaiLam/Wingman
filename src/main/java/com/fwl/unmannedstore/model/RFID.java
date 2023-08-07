@@ -36,9 +36,9 @@ public class RFID {
     )
     private Store store;
 
-    @PrePersist
-    void createdAt() {
-        this.product.setQuantity(product.getQuantity() + 1);
-    }
+//    @PrePersist
+//    void createdAt() {
+//        this.product.setQuantity(product.getQuantity() + 1);
+//    }
 
 }

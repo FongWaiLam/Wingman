@@ -143,7 +143,7 @@ public class ProductController {
     @GetMapping("/product/{prod_id}/deactivate_product")
     public String deleteProductById(@PathVariable int prod_id) {
         productService.deactivateById(prod_id);
-        return "redirect:/usms/products_inventory";
+        return "redirect:/usms/products";
     }
 
 }

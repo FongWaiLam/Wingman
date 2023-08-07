@@ -3,6 +3,7 @@ package com.fwl.unmannedstore.model;
 import com.fwl.unmannedstore.security.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class Product {
     private String category;
     private String photo; // path to image
     private List<String> photos;
-    private int quantity = 0;
+//    private int quantity = 0;
     private Timestamp creation_date;
     private Timestamp last_updated;
     @ManyToOne(
@@ -55,14 +56,14 @@ public class Product {
     void createdAt() {
         this.creation_date = this.last_updated = new Timestamp(System.currentTimeMillis());
 //        Add after the Security is implemented
-//        this.updated_by_user = LoggedUser.get();
+        this.updated_by_user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
     @PreUpdate
     void updatedAt() {
         this.last_updated = new Timestamp(System.currentTimeMillis());
         //Add after the Security is implemented
-//        this.updated_by_user = LoggedUser.get();
+        this.updated_by_user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
 //    public void addRFID(RFID rfid) {

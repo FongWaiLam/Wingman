@@ -54,21 +54,21 @@ public class RFIDService {
         save(rfid);
 
         Product product = rfid.getProduct();
-        quantityReduceByOne(product);
+//        quantityReduceByOne(product);
         productRepository.save(product);
     }
 
     // Delete a RFID
     public void deleteByEPC(String epc) {
         RFID rfid = getRFIDByEPC(epc);
-        quantityReduceByOne(rfid.getProduct());
+//        quantityReduceByOne(rfid.getProduct());
 
         rfidRepository.deleteById(epc);
     }
 
     // Helper method: decrease the quantity of the product by 1
-    private void quantityReduceByOne(Product product) {
-        product.setQuantity(product.getQuantity() - 1);
-    }
+//    private void quantityReduceByOne(Product product) {
+//        product.setQuantity(product.getQuantity() - 1);
+//    }
 
 }
