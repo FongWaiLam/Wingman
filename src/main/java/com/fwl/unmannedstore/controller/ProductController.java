@@ -1,9 +1,13 @@
 package com.fwl.unmannedstore.controller;
 
+import com.azure.storage.blob.BlobClient;
+import com.azure.storage.blob.BlobContainerClient;
+import com.azure.storage.blob.BlobServiceClient;
 import com.fwl.unmannedstore.model.Product;
 import com.fwl.unmannedstore.service.ProductService;
 import jakarta.persistence.EntityManager;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -25,12 +29,15 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
-
     @Autowired
     private EntityManager entityManager;
+//    @Value("${file.upload.path}")
+//    private String uploadPath;
+    @Autowired
+    private BlobServiceClient blobServiceClient;
 
-    @Value("${file.upload.path}")
-    private String uploadPath;
+    @Value("${azure.storage.blob.container-name}")
+    private String containerName;
 
     @GetMapping("/add_product")
     public String addProduct() {
@@ -38,28 +45,44 @@ public class ProductController {
     }
 
     // Helper Method to save a photo
-    private String savePhoto(int prodId, MultipartFile photo) throws IOException{
-        String photoName = photo.getOriginalFilename();
-        String productUploadPath = uploadPath + File.separator + prodId;
-        log.info("productUploadPath: " + productUploadPath);
+//    private String savePhoto(int prodId, MultipartFile photo) throws IOException{
+//        String photoName = photo.getOriginalFilename();
+//        String productUploadPath = uploadPath + File.separator + prodId;
+//        log.info("productUploadPath: " + productUploadPath);
+//
+//        File targetedFilePath = new File(productUploadPath, photoName);
+//        if (!targetedFilePath.getParentFile().exists()) {
+//            targetedFilePath.getParentFile().mkdir();
+//        }
+//        int indexOfSuffix = photo.getOriginalFilename().lastIndexOf(".");
+//        String photoExtension = photoName.substring(indexOfSuffix);
+//        log.info("photoExtension: " + photoExtension);
+//
+//        if(targetedFilePath.exists() && targetedFilePath.isFile()){
+//            log.info("targetedFilePath (Already Exist): " + targetedFilePath.getAbsolutePath());
+//            photoName = photoName.substring(0,indexOfSuffix) + new Timestamp(System.currentTimeMillis()).toString().replace(":","") + photoExtension;
+//        }
+//        log.info("photoName: " + photoName);
+//
+//        File newPhoto = new File(productUploadPath, photoName);
+//        photo.transferTo(newPhoto);
+//        return photoName;
+//    }
 
-        File targetedFilePath = new File(productUploadPath, photoName);
-        if (!targetedFilePath.getParentFile().exists()) {
-            targetedFilePath.getParentFile().mkdir();
-        }
-        int indexOfSuffix = photo.getOriginalFilename().lastIndexOf(".");
-        String photoExtension = photoName.substring(indexOfSuffix);
-        log.info("photoExtension: " + photoExtension);
+    // Save to Azure Blob Storage
+    public String savePhoto(int prodId, MultipartFile photo) throws IOException {
+        String photoName = FilenameUtils.getBaseName(photo.getOriginalFilename());
+        String photoExtension = FilenameUtils.getExtension(photo.getOriginalFilename());
+        String photoRename =  photoName
+                            + new Timestamp(System.currentTimeMillis()).toString().replace(":","").replace(".", "") + "."
+                            + photoExtension;
+        String blobName = "product" + File.separator + prodId + File.separator + photoRename;
+        log.info("Renamed Photo: " + blobName);
 
-        if(targetedFilePath.exists() && targetedFilePath.isFile()){
-            log.info("targetedFilePath (Already Exist): " + targetedFilePath.getAbsolutePath());
-            photoName = photoName.substring(0,indexOfSuffix) + new Timestamp(System.currentTimeMillis()).toString().replace(":","") + photoExtension;
-        }
-        log.info("photoName: " + photoName);
-
-        File newPhoto = new File(productUploadPath, photoName);
-        photo.transferTo(newPhoto);
-        return photoName;
+        BlobContainerClient containerClient = blobServiceClient.getBlobContainerClient(containerName);
+        BlobClient blobClient = containerClient.getBlobClient(blobName);
+        blobClient.upload(photo.getInputStream(), photo.getSize(), true);
+        return photoRename;
     }
 
     @Transactional
