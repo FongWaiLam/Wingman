@@ -63,7 +63,7 @@
     <div class="card shadow my-5 mx-5">
         <div classname="container my-5 p-5 w-50 offset-md-4">
             <h1 class="text-center pt-5">Update Product Information</h1>
-            <form class="col -md-4 my-5 p-5" th:action="@{/usms/save_product}" method="post" th:object="${product}" enctype="multipart/form-data">
+            <form class="col -md-4 my-5 p-5" th:action="@{/usms/product/{id}/update_product_info(id=${product.prodId})}" method="post" th:object="${product}">
                 <div class="row">
                     <div class="col-2"></div>
                     <div class="col-6 mb-3">
@@ -92,7 +92,7 @@
                     <div class="col-2"></div>
                     <div class="col-8 mb-3">
                         <label for="description" class="form-label" >Description</label>
-                        <textarea rows="5" cols="25" class="form-control" name="description" th:value="${product.description}"></textarea>
+                        <textarea rows="5" cols="25" class="form-control" name="description" th:text="${product.description}"></textarea>
                     </div>
                     <div class="col-2"></div>
                 </div>
@@ -125,7 +125,7 @@
 </div>
 <th:block layout:fragment="scripts">
     <!-- add any scripts related to this page -->
-    <script src="/js/photo-preview.js"></script>
+<!--    <script src="/js/photo-preview.js"></script>-->
 </th:block>
 </body>
 </html>

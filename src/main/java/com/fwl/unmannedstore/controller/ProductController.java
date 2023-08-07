@@ -134,10 +134,22 @@ public class ProductController {
     }
 
     @GetMapping("/product/{prodId}/update_product")
-    public String editProductById(@PathVariable int prodId, Model model) {
+    public String showUpdateProductForm(@PathVariable int prodId, Model model) {
         Product product = productService.getProductById(prodId);
         model.addAttribute("product", product);
         return"update_product";
+    }
+
+    @PostMapping("/product/{prodId}/update_product_info")
+    public String updateProductById(@PathVariable int prodId, @ModelAttribute Product updatedProduct) {
+        Product product = productService.getProductById(prodId);
+        product.setName(updatedProduct.getName());
+        product.setActive(updatedProduct.isActive());
+        product.setCategory(updatedProduct.getCategory());
+        product.setPrice(updatedProduct.getPrice());
+        product.setDescription(updatedProduct.getDescription());
+        productService.save(product);
+        return"redirect:/usms/products";
     }
 
     @GetMapping("/product/{prod_id}/deactivate_product")
