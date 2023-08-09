@@ -12,12 +12,13 @@
   <!-- content for this page -->
   <div class="container text-center my-5">
     <h1 class="text-center pt-4">Sales Records</h1>
+    <div id="line-chart"></div>
     <div class="container my-5">
       <table class="table table-striped table-hover">
         <thead>
         <tr>
           <th scope="col">ID</th>
-          <th scope="col">Transaction</th>
+          <th scope="col">Sales Date</th>
           <th scope="col">Amount</th>
           <th scope="col">Store Ref. ID</th>
           <th scope="col">Payment Ref. ID</th>
@@ -28,9 +29,9 @@
         <tr th:each="s :${salesRecords}">
           <td th:text="${s.salesId}"></td>
           <td th:text="${s.transactionDateTime}"></td>
-          <td th:text="${s.amount}"></td>
+          <td th:text="${s.amountInPence/100.0}"></td>
           <td th:text="${s.store.storeId}"></td>
-          <td th:text="${s.payment.payId}"></td>
+          <td th:text="${s.payment.paymentIntentId}"></td>
           <td th:text="${s.cart.cartId}"></td>
         </tr>
         </tbody>
@@ -39,7 +40,10 @@
   </div>
 </div>
 <th:block layout:fragment="scripts">
+
   <!-- add any scripts related to this page -->
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="/js/sales.js"></script>
 </th:block>
 </body>
 </html>

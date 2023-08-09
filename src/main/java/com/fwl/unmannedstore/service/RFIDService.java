@@ -1,5 +1,6 @@
 package com.fwl.unmannedstore.service;
 
+import com.fwl.unmannedstore.controller.requestResponse.InventoryDisplay;
 import com.fwl.unmannedstore.model.Product;
 import com.fwl.unmannedstore.model.RFID;
 import com.fwl.unmannedstore.model.Store;
@@ -16,6 +17,17 @@ public class RFIDService {
     private RFIDRepository rfidRepository;
     @Autowired
     private ProductRepository productRepository;
+
+    public List<InventoryDisplay> getAllUnsoldInventoryDisplay() {
+        return rfidRepository.findAllUnsoldProductTotalValueAndQuantity();
+    }
+    public List<InventoryDisplay> getAllUnsoldInventoryDisplayByCategory(String category) {
+        return rfidRepository.findAllUnsoldProductTotalValueAndQuantityByCat(category);
+    }
+
+    public List<InventoryDisplay> getAllUnsoldInventoryDisplayGroupCatIgnoreStore() {
+        return rfidRepository.findAllUnsoldProductTotalValueAndQuantityByCatIgnoreStore();
+    }
 
     // Get the full RFID List
     public List<RFID> getAllRFIDs() {
@@ -65,6 +77,9 @@ public class RFIDService {
 
         rfidRepository.deleteById(epc);
     }
+
+
+
 
     // Helper method: decrease the quantity of the product by 1
 //    private void quantityReduceByOne(Product product) {

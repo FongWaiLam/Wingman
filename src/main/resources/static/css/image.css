@@ -1,0 +1,13 @@
+.thumbnail {
+  border: 1px solid #ddd;
+  border-radius: 1px;
+  padding: 2px;
+  width: 60px;
+}
+
+.product-photo {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 5px;
+  width: 200px;
+}

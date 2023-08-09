@@ -26,16 +26,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 async function connect() {
-  // Add code to request & open port here.
-  // - Request a port and open a connection.
-  port = await navigator.serial.requestPort();
-
-  // Add listener to auto connect again if permission is granted once.
-  navigator.serial.addEventListener("connect", async (event) => {
-    port = event.target;
-    await port.open({ baudRate: 115200 });
-  });
-
+//  Only work for previously authorised ports
+    const ports = await navigator.serial.getPorts();
+  if (ports[0] == null) {
+    // - Request a port and open a connection.
+    port = await navigator.serial.requestPort();
+  } else {
+    port = ports[0];
+  }
   // - Wait for the port to open.
   await port.open({ baudRate: 115200 });
   writeToSerialPort(multiReadByteArray);

@@ -60,11 +60,11 @@ public class RFIDController {
         rfidService.deleteByEPC(epc);
         return "redirect:/product/{product.prodId}";
     }
-
-    @GetMapping("/inventory")
-    public ModelAndView getInventory() {
-        List<RFID> rfidList = rfidService.getAllRFIDs();
-        return new ModelAndView("inventory", "rfidList", rfidList);
-    }
+//
+//    @GetMapping("/inventory")
+//    public ModelAndView getInventory() {
+//        List<RFID> rfidList = rfidService.getAllRFIDs();
+//        return new ModelAndView("inventory", "rfidList", rfidList);
+//    }
 
 }

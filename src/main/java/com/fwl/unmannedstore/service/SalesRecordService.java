@@ -1,5 +1,7 @@
 package com.fwl.unmannedstore.service;
 
+import com.fwl.unmannedstore.controller.requestResponse.InventoryDisplay;
+import com.fwl.unmannedstore.controller.requestResponse.SalesDisplay;
 import com.fwl.unmannedstore.model.SalesRecord;
 import com.fwl.unmannedstore.model.Store;
 import com.fwl.unmannedstore.respository.SalesRecordRepository;
@@ -42,5 +44,9 @@ public class SalesRecordService {
     // Delete a sales record
     public void deleteById(int salesId) {
         salesRecordRepository.deleteById(salesId);
+    }
+
+    public List<SalesDisplay> getSalesByMonth() {
+        return salesRecordRepository.findSumSalesByMonthAndYear();
     }
 }

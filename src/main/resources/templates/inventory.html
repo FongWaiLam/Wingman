@@ -5,14 +5,50 @@
       layout:decorate="~{base}">
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" type="text/css" href="/index.css">
 </head>
 <body>
 <div layout:fragment="page_content">
   <!-- content for this page -->
   <div class="container text-center my-5">
+    <h1 class="text-center pt-4">Inventory</h1>
 
+    <div id="pie-chart"></div>
+
+    <div class="container my-5">
+      <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+          <th scope="col">Category</th>
+          <th scope="col">Product ID</th>
+          <th scope="col">Product Name</th>
+          <th scope="col">Total Quantity</th>
+          <th scope="col">Total Value (£)</th>
+          <th scope="col">Store ID</th>
+          <th scope="col">Store Name</th>
+<!--          <th scope="col">See RFIDs</th>-->
+        </tr>
+        </thead>
+        <tbody id="tableBody">
+        <tr th:each="p :${products}">
+          <td th:text="${p.category}"></td>
+          <td th:text="${p.prodId}"></td>
+          <td th:text="${p.prodName}"></td>
+          <td th:text="${p.totalAmount}"></td>
+          <td th:text="${p.totalValue}"></td>
+          <td th:text="${p.storeId}"></td>
+          <td th:text="${p.storeName}"></td>
+<!--          <td><a th:href="@{/usms/product/{id}/add_rfid(id=${p.prodId})}" class="btn btn-outline-primary btn-sm inline"><i class="fa-solid fa-tags"></i></a></td>-->
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
+
+<!--  <script th:inline="javascript">-->
+<!--    var products = [[${products}]];-->
+<!--  </script>-->
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="/js/inventory.js"></script>
 </div>
 <th:block layout:fragment="scripts">
   <!-- add any scripts related to this page -->

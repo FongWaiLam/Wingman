@@ -1,5 +1,7 @@
 package com.fwl.unmannedstore.respository;
 
+import com.fwl.unmannedstore.controller.requestResponse.InventoryDisplay;
+import com.fwl.unmannedstore.controller.requestResponse.SalesDisplay;
 import com.fwl.unmannedstore.model.SalesRecord;
 import com.fwl.unmannedstore.model.Store;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,4 +21,11 @@ public interface SalesRecordRepository extends JpaRepository<SalesRecord, Intege
             nativeQuery = true
     )
     public List<SalesRecord> findByPeriod(@Param("start") Date start, @Param("end") Date end, @Param("store") int storeId);
+
+
+    @Query("SELECT new com.fwl.unmannedstore.controller.requestResponse.SalesDisplay(YEAR(s.transactionDateTime), MONTH(s.transactionDateTime), SUM(s.amountInPence)/100) " +
+            "FROM SalesRecord s " +
+            "GROUP BY YEAR(s.transactionDateTime), MONTH(s.transactionDateTime)")
+    List<SalesDisplay> findSumSalesByMonthAndYear();
+
 }
