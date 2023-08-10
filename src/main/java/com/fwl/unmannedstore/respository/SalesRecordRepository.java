@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface SalesRecordRepository extends JpaRepository<SalesRecord, Integer> {
@@ -23,9 +24,14 @@ public interface SalesRecordRepository extends JpaRepository<SalesRecord, Intege
     public List<SalesRecord> findByPeriod(@Param("start") Date start, @Param("end") Date end, @Param("store") int storeId);
 
 
-    @Query("SELECT new com.fwl.unmannedstore.controller.requestResponse.SalesDisplay(YEAR(s.transactionDateTime), MONTH(s.transactionDateTime), SUM(s.amountInPence)/100) " +
+    @Query("SELECT new com.fwl.unmannedstore.controller.requestResponse.SalesDisplay(YEAR(s.transactionDateTime), MONTH(s.transactionDateTime), SUM(s.amountInPence)/100.0) " +
             "FROM SalesRecord s " +
             "GROUP BY YEAR(s.transactionDateTime), MONTH(s.transactionDateTime)")
     List<SalesDisplay> findSumSalesByMonthAndYear();
 
+    @Query("SELECT SUM(s.amountInPence)/100.0 " +
+            "FROM SalesRecord s " +
+            "WHERE YEAR(s.transactionDateTime) = :year AND MONTH(s.transactionDateTime) = :month " +
+            "GROUP BY YEAR(s.transactionDateTime), MONTH(s.transactionDateTime)")
+    Optional<Double> findSumSalesByAMonth(@Param("year") int year, @Param("month") int month);
 }

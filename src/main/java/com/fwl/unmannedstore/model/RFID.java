@@ -17,7 +17,7 @@ public class RFID {
     @Id
     private String epc;
     @ManyToOne(
-            fetch = FetchType.EAGER
+            fetch = FetchType.LAZY
     )
     @JoinColumn(
             name = "prodId",

@@ -24,20 +24,10 @@ public class SalesRestController {
     @Autowired
     private StoreService storeService;
 
-//    @GetMapping("/inventory/{category}")
-//    public ResponseEntity<List<InventoryDisplay>> getCategoryStore(@PathVariable("category") String category) {
-//        List<InventoryDisplay> inventoryDisplayList = rfidService.getAllUnsoldInventoryDisplayByCategory(category);
-//        return ResponseEntity.ok(inventoryDisplayList);
-//    }
 
     @GetMapping("/sales/line-chart")
     public ResponseEntity<List<SalesDisplay>> getMonthlyInventory() {
         List<SalesDisplay> inventoryData = salesRecordService.getSalesByMonth();
         return ResponseEntity.ok(inventoryData);
     }
-//    @GetMapping("/inventory/pie_chart")
-//    public ResponseEntity<List<InventoryDisplay>> getPieChart() {
-//        List<InventoryDisplay> inventoryData = rfidService.getAllUnsoldInventoryDisplayGroupCatIgnoreStore();
-//        return ResponseEntity.ok(inventoryData);
-//    }
 }

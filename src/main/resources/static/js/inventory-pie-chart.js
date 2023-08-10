@@ -1,29 +1,16 @@
-document.addEventListener('DOMContentLoaded', () => {
-
-    // Reference to Google Chart Visualization API
-     // Load the Visualization API and the piechart package.
-          google.charts.load('current', {'packages':['corechart']});
-
-          // Set a callback to run when the Google Visualization API is loaded.
-          google.charts.setOnLoadCallback(drawChart);
-
-          // Callback that creates and populates a data table,
-          // instantiates the pie chart, passes in the data and
-          // draws it.
-
-          function drawChart() {
+           function drawPieChart() {
 
             // Get products
             $.get("/usms/inventory/pie_chart", function(products, status){
                 if (status == 'success') {
                 console.log(products);
                 console.log(typeof products);
-                    chartSetUp(products);
+                    pieChartSetUp(products);
                 }
               });
           }
 
-           function chartSetUp(products) {
+           function pieChartSetUp(products) {
                 // Create the data table.
                 var data = new google.visualization.DataTable();
                 data.addColumn('string', 'Category');
@@ -38,9 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 data.addRows(rows);
 
                 // Set chart options
-                var options = {'title':'Categories vs Total Values',
-                               'width':500,
-                               'height':400};
+                var options = {'title':'Categories vs Total Values'};
 
                 // Instantiate and draw our chart, passing in some options.
                 var chart = new google.visualization.PieChart(document.getElementById('pie-chart'));
@@ -51,12 +36,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     var category = data.getValue(selectedItem.row, 0);
                     // Put category product data to products variable
                     getProductsOfCategory(category);
-                    alert('The user selected ' + category);
+//                    alert('The user selected ' + category);
                   }
                 }
 
                 google.visualization.events.addListener(chart, 'select', selectHandler);
-                chart.draw(data, options);
+                setTimeout(function(){ chart.draw(data, options); }, 1000);
            }
 
 
@@ -66,12 +51,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 function(data, status){
                 if (status == 'success') {
                     products = data;
-                    replaceExistingTableData()
+                    replaceExistingTableData(products)
                 }
               });
           }
 
-          function replaceExistingTableData() {
+          function replaceExistingTableData(products) {
             $("#tableBody").empty();
                 products.forEach((product) => {
                   // Create a new row and cells
@@ -113,7 +98,3 @@ document.addEventListener('DOMContentLoaded', () => {
                 })
 
           }
-
-
-});
-

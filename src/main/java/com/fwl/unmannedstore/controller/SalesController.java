@@ -26,7 +26,9 @@ public class SalesController {
     @GetMapping("/sales_records")
     public String getSalesRecords(Model model) {
         List<SalesRecord> salesRecords = salesRecordService.getAllSalesRecords();
+        List<Store> storeList = storeService.getAllStores();
         model.addAttribute("salesRecords", salesRecords);
+        model.addAttribute("storeList", storeList);
         return "sales_records";
     }
 }

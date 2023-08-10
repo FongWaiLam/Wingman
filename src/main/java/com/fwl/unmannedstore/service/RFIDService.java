@@ -29,6 +29,14 @@ public class RFIDService {
         return rfidRepository.findAllUnsoldProductTotalValueAndQuantityByCatIgnoreStore();
     }
 
+    public List<InventoryDisplay> getAllUnsoldInventoryDisplayByStore() {
+        return rfidRepository.findAllUnsoldProductTotalValueAndQuantityByStore();
+    }
+
+    public List<InventoryDisplay> getAllUnsoldInventoryDisplayByStore(int storeId) {
+        return rfidRepository.findAllUnsoldProductTotalValueAndQuantityInAStore(storeId);
+    }
+
     // Get the full RFID List
     public List<RFID> getAllRFIDs() {
         return rfidRepository.findAll();

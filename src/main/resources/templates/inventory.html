@@ -10,10 +10,17 @@
 <div layout:fragment="page_content">
   <!-- content for this page -->
   <div class="container text-center my-5">
-    <h1 class="text-center pt-4">Inventory</h1>
-
-    <div id="pie-chart"></div>
-
+    <h1 class="text-center py-5">Inventory</h1>
+    <div class="card shadow">
+      <div class="row my-2">
+        <div id="pie-chart" class="col-6"></div>
+        <div id="bar-chart" class="col-6"></div>
+      </div>
+      <div class="row my-2">
+        <div class="col-6"><h6>Category Filter (Click Pie Chart)</h6></div>
+        <div class="col-6"><h6>Store Filter (Click Bar Chart)</h6></div>
+      </div>
+    </div>
     <div class="container my-5">
       <table class="table table-striped table-hover">
         <thead>
@@ -44,11 +51,18 @@
     </div>
   </div>
 
-<!--  <script th:inline="javascript">-->
-<!--    var products = [[${products}]];-->
-<!--  </script>-->
+
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-  <script src="/js/inventory.js"></script>
+  <script src="/js/inventory-pie-chart.js"></script>
+  <script src="/js/inventory-bar-chart.js"></script>
+  <script th:inline="javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(function() {
+        drawPieChart();
+        drawBarChart();
+      });
+  </script>
+
 </div>
 <th:block layout:fragment="scripts">
   <!-- add any scripts related to this page -->

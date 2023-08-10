@@ -23,9 +23,9 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="card shadow h-100 custom-card">
+                <div class="card shadow h-100 custom-card storeImg">
                     <div class="card-body">
-                        <h2 class="pt-5" th:text="${storeNo}?: 'NO DATA'"></h2><br>
+                        <h2 class="pt-5" th:text="${activeStoreNo}?: 'NO DATA'"></h2><br>
                         <p class="card-text">Active Store No.</p>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
             <div class="col-md-3">
                 <div class="card shadow h-100 custom-card">
                     <div class="card-body">
-                        <h2  class="pt-5" th:text="${productNo}?: 'NO DATA'"></h2><br>
+                        <h2  class="pt-5" th:text="${activeProductNo}?: 'NO DATA'"></h2><br>
                         <p class="card-text">Active Product No.</p>
                     </div>
                 </div>
@@ -41,8 +41,8 @@
             <div class="col-md-3">
                 <div class="card shadow h-100 custom-card">
                     <div class="card-body">
-                        <h2 class="pt-5" th:text="${monthSales}?: 'NO DATA'"></h2><br>
-                        <p class="card-text">Monthly Sales</p>
+                        <h2 class="pt-5" th:text="${salesMonthToDateString}?: 'NO DATA'"></h2><br>
+                        <p class="card-text">Monthly Sales (£)</p>
                     </div>
                 </div>
             </div>

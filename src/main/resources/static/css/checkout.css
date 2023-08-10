@@ -78,3 +78,8 @@ hr.rounded {
   border-top: 8px solid #bbb;
   border-radius: 5px;
 }
+
+body{
+    background-image: url("/images/checkout-background.jpg");
+    background-size: cover;
+}

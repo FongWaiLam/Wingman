@@ -25,4 +25,11 @@ public class InventoryDisplay {
         this.totalAmount = totalAmount;
         this.totalValue = totalValue;
     }
+
+    public InventoryDisplay(long totalAmount, double totalValue, int storeId, String storeName) {
+        this.totalAmount = totalAmount;
+        this.totalValue = totalValue;
+        this.storeId = storeId;
+        this.storeName = storeName;
+    }
 }

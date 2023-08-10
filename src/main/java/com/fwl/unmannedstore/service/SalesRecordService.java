@@ -49,4 +49,8 @@ public class SalesRecordService {
     public List<SalesDisplay> getSalesByMonth() {
         return salesRecordRepository.findSumSalesByMonthAndYear();
     }
+
+    public double getSalesByAMonth(int year, int month) {
+        return salesRecordRepository.findSumSalesByAMonth(year, month).orElse(0.0);
+    }
 }

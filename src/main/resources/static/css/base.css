@@ -53,3 +53,12 @@ label {
 }
 #datepicker{width:180px;}
 #datepicker > span:hover{cursor: pointer;}
+
+body {
+background-image: url("/images/background.jpg");
+background-size: cover;
+}
+
+.nav-link:hover {
+    font-weight: 500;
+}
