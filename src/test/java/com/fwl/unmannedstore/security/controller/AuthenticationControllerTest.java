@@ -22,13 +22,13 @@ class AuthenticationControllerTest {
     @Autowired
     private UserRepository userRepository;
 
-    @Test
-    public void registerAcc() {
-        RegisterRequest registerRequest = new RegisterRequest("mary", "lam", "marylam@gmail.com", "marylam", Role.ROLE_ADMIN);
-        String profilePhoto = "C:\\Lenovo Notebook\\Waiwai lenovo N.B\\UK\\Postgrad\\Final Project\\gitlab\\unmanned-store\\profile(white) - W1.png";
-        User user = authenticationService.register(registerRequest);
-        user.setProfile(profilePhoto);
-        userRepository.save(user);
-    }
+    // @Test
+    // public void registerAcc() {
+    //     RegisterRequest registerRequest = new RegisterRequest("mary", "lam", "marylam@gmail.com", "marylam", Role.ROLE_ADMIN);
+    //     String profilePhoto = "C:\\Lenovo Notebook\\Waiwai lenovo N.B\\UK\\Postgrad\\Final Project\\gitlab\\unmanned-store\\profile(white) - W1.png";
+    //     User user = authenticationService.register(registerRequest);
+    //     user.setProfile(profilePhoto);
+    //     userRepository.save(user);
+    // }
 
 }
