@@ -301,6 +301,7 @@ function updateSalesPaymentRecord(paymentIntentId) {
     });
 }
 
+
 function getFinalEPCList() {
     scannedProducts.forEach((product) => epcList.push(product.epc));
 }
