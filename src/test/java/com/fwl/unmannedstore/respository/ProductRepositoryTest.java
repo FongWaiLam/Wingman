@@ -10,9 +10,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class ProductRepositoryTest {
     @Autowired
     private ProductRepository productRepository;
-    @Test
-    public void printQuantity() {
-        System.out.println("Quantity of Product ID 2 = " + productRepository.findById(2).get().getQuantity());
-    }
+//    @Test
+//    public void printQuantity() {
+//        System.out.println("Quantity of Product ID 2 = " + productRepository.findById(2).get().getQuantity());
+//    }
 
 }

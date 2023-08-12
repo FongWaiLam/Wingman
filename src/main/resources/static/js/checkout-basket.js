@@ -60,7 +60,7 @@ async function step3Performed() {
     // Disconnect rfid reader
     writeToSerialPort(endReadByteArray);
 
-    let amountInPence = calTotalAmount();
+    let amountInPence = calTotalAmount(scannedProducts);
     let paymentIntentId = await collectPayment(amountInPence);
     paymentIntentId = await capture(paymentIntentId);
 
@@ -89,10 +89,10 @@ async function step3Performed() {
 //    });
 
 
-//    var delayInMilliseconds = 10000; //10 second
-//    setTimeout(function() {
-//    window.location.reload();
-//    }, delayInMilliseconds);
+    var delayInMilliseconds = 10000; //10 second
+    setTimeout(function() {
+    window.location.reload();
+    }, delayInMilliseconds);
 
 }
 
@@ -193,7 +193,13 @@ fetch(url, {
   },
   body: JSON.stringify(data),
 })
-.then(response => response.json()) // Parse the response as JSON
+.then(response => {
+                    if(!response.ok) {
+                    console.log(data.message);
+                    return;
+                    }
+                    return response.json();
+                  })
 .then(data => {
     console.log('Product Info:', data);
     scannedProducts.push(data);
@@ -207,7 +213,7 @@ fetch(url, {
         previousDisplaySetSize++
     }
     // Update total
-    let totalAmount = (calTotalAmount() / (100.0)).toFixed(2);
+    let totalAmount = (calTotalAmount(scannedProducts) / (100.0)).toFixed(2);
     console.log("total: " + totalAmount);
     total.innerHTML = "Total(£): " + totalAmount;
 })
@@ -232,12 +238,15 @@ function updateBasket(product) {
   // Set the text content of each cell
 //  rfidCell.textContent = product.rfid;
   let img = document.createElement('img');
-  img.src = product.photoUrl;
+  img.src = "https://unmannedstore.blob.core.windows.net/wingman/product/" + product.prodId + "/" + product.photo;
   img.classList.add("thumbnail");
   photoCell.appendChild(img);
   nameCell.textContent = product.name;
+  nameCell.classList.add("align-middle");
   priceCell.textContent = product.price;
+  priceCell.classList.add("align-middle");
   quantityCell.textContent = 1;
+  quantityCell.classList.add("align-middle");
 
   // Append the cells to the row
   row.appendChild(photoCell);
@@ -257,35 +266,41 @@ function updateQuantity (prodId) {
 }
 
 
-const currentURL = window.location.href
+const currentURL = window.location.href;
 const myArray = currentURL.split("/");
 const storeId = myArray[myArray.length-1];
-
+const epcList = [];
 function updateSalesPaymentRecord(paymentIntentId) {
-let url = '/update_pay_sales_record';
-let amountInPence = calTotalAmount()
-// JSON object
-let data = {
-    epcList: Array.from(epcSet),
-    amountInPence: amountInPence,
-    paymentIntentId: paymentIntentId,
-    isSuccessful: true,
-    storeId: storeId,
-    };
-console.log("paymentIntentId: " + paymentIntentId);
+    getFinalEPCList();
+    console.log("Final EPC List: " + epcList);
+    let url = '/update_pay_sales_record';
+    let amountInPence = calTotalAmount(scannedProducts);
+    // JSON object
+    let data = {
+        epcList: epcList,
+        amountInPence: amountInPence,
+        paymentIntentId: paymentIntentId,
+        isSuccessful: true,
+        storeId: storeId,
+        };
+    console.log("paymentIntentId: " + paymentIntentId);
 
-fetch(url, {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify(data),
-})
-.then(response => response.json()) // Parse the response as JSON
-.then(message => {
-    console.log('Update Sales, Cart and Payment record:', message.message);
-})
-.catch((error) => {
-  console.error('Error:', error);
-});
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+    .then(response => response.json()) // Parse the response as JSON
+    .then(message => {
+        console.log('Update Sales, Cart and Payment record:', message.message);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+}
+
+function getFinalEPCList() {
+    scannedProducts.forEach((product) => epcList.push(product.epc));
 }

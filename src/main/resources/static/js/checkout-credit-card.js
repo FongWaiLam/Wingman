@@ -59,10 +59,10 @@ function stripeConnect() {
 //    }, delayInMilliseconds);
 //}
 
-function calTotalAmount() {
+function calTotalAmount(products) {
     let amountInPence = 0;
 
-    scannedProducts.forEach(function(product) {
+    products.forEach(function(product) {
         amountInPence += parseInt(product.price * 100);
         console.log("Total amountInPence: " + amountInPence);
     });

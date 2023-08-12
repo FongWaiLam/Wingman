@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ public class PaymentSalesRestController {
     @Autowired
     private EntityManager entityManager;
 
+    @Transactional
     @PostMapping("/update_pay_sales_record")
     public ResponseEntity<Message> getProduct(@RequestBody PaymentSalesRequest request) {
         // Get RFID List
