@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{base}">
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+<div layout:fragment="page_content">
+  <!-- content for this page -->
+  <div class="card shadow my-5 mx-5">
+    <div class="mx-auto">
+    <img width="600px" src="https://img.freepik.com/free-vector/construction-set-icons_24877-60028.jpg?w=740&t=st=1692754798~exp=1692755398~hmac=82b05a7dd8470730ab8701541a00299e05c952476a339ab91593605d412f8ec1">
+    </div>
+  </div>
+</div>
+<th:block layout:fragment="scripts">
+  <!-- add any scripts related to this page -->
+  <script src="/js/add_rfid.js"></script>
+
+</th:block>
+</body>
+</html>

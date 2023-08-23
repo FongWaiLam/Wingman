@@ -115,8 +115,6 @@ async function connect() {
 // Function to write a byte array to the serial port
 async function writeToSerialPort(byteArray) {
   const uint8Array = new Uint8Array(byteArray);
-//  outputStream.write(uint8Array);
-
   const writer = port.writable.getWriter();
   await writer.write(uint8Array);
 
@@ -180,46 +178,45 @@ let total = document.getElementById("total");
 
 function getProduct(epc) {
 
-let url = '/checkout/get_product';
+    let url = '/checkout/get_product';
 
-// JSON object
-let data = { epc: epc };
-console.log(epc);
+    // JSON object
+    let data = { epc: epc };
+    console.log(epc);
 
-fetch(url, {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify(data),
-})
-.then(response => {
-                    if(!response.ok) {
-                    console.log(data.message);
-                    return;
-                    }
-                    return response.json();
-                  })
-.then(data => {
-    console.log('Product Info:', data);
-    scannedProducts.push(data);
-    prodIdDisplay.add(data.prodId);
-    if (prodIdDisplay.size != (previousDisplaySetSize + 1)) {
-        // Update (Add 1 ) the quantity column of the row with this prodId
-        updateQuantity(data.prodId);
-    } else {
-        // Create a new row for this product with quantity 1
-        updateBasket(data);
-        previousDisplaySetSize++
-    }
-    // Update total
-    let totalAmount = (calTotalAmount(scannedProducts) / (100.0)).toFixed(2);
-    console.log("total: " + totalAmount);
-    total.innerHTML = "Total(£): " + totalAmount;
-})
-.catch((error) => {
-  console.error('Error:', error);
-});
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+    .then(response => {
+                        if (response.status === 409) {
+                           throw new Error("This product was not available for sale.");
+                        }
+                        return response.json();
+                      })
+    .then(data => {
+        console.log('Product Info:', data);
+        scannedProducts.push(data);
+        prodIdDisplay.add(data.prodId);
+        if (prodIdDisplay.size != (previousDisplaySetSize + 1)) {
+            // Update (Add 1 ) the quantity column of the row with this prodId
+            updateQuantity(data.prodId);
+        } else {
+            // Create a new row for this product with quantity 1
+            updateBasket(data);
+            previousDisplaySetSize++
+        }
+        // Update total
+        let totalAmount = (calTotalAmount(scannedProducts) / (100.0)).toFixed(2);
+        console.log("total: " + totalAmount);
+        total.innerHTML = "Total(£): " + totalAmount;
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
 }
 
 function updateBasket(product) {

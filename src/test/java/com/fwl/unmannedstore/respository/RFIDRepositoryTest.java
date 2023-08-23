@@ -21,11 +21,11 @@ class RFIDRepositoryTest {
     @Autowired
     private StoreRepository storeRepository;
 
-    @Test
-    public void printRFIDFullList() {
-
-        System.out.println(rfidRepository.findAll());
-    }
+//    @Test
+//    public void printRFIDFullList() {
+//
+//        System.out.println(rfidRepository.findAll());
+//    }
 
 //    @Test
 //    public void printRFIDByProduct() {

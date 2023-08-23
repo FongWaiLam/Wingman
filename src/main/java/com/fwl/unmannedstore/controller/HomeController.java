@@ -52,4 +52,5 @@ public class HomeController {
         model.addAttribute("salesMonthToDateString", salesMonthToDateString);
         return "index";
     }
+
 }

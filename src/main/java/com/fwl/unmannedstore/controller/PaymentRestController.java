@@ -51,8 +51,8 @@ public class PaymentRestController {
 
 
     @PostMapping("/create_payment_intent")
-    public String createPaymentIntent(@RequestBody PaymentIntentRequest paymentIntentRequest) throws StripeException {
-
+    public String createPaymentIntent(@RequestBody PaymentIntentRequest paymentIntentRequest)
+            throws StripeException {
         // For Terminal payments, the 'payment_method_types' parameter must include
         // 'card_present'.
         // To automatically capture funds when a charge is authorized,
@@ -74,7 +74,8 @@ public class PaymentRestController {
 
 
     @PostMapping("/capture_payment_intent")
-    public String capturePaymentIntent(@RequestBody PaymentIntentRequest paymentIntentRequest) throws StripeException {
+    public String capturePaymentIntent(@RequestBody PaymentIntentRequest paymentIntentRequest)
+            throws StripeException {
         log.info("PaymentIntentRequest: " + paymentIntentRequest);
         PaymentIntent intent = PaymentIntent.retrieve(paymentIntentRequest.getPaymentIntentId());
         log.info("Intent: " + intent);

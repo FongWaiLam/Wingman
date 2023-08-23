@@ -18,6 +18,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
@@ -82,7 +83,8 @@ public class AuthenticationController {
         String photoName = FilenameUtils.getBaseName(photo.getOriginalFilename());
         String photoExtension = FilenameUtils.getExtension(photo.getOriginalFilename());
         String photoRename =  photoName
-                + new Timestamp(System.currentTimeMillis()).toString().replace(":","").replace(".", "") + "."
+                + new Timestamp(System.currentTimeMillis()).toString().replace(":","").
+                replace(".", "") + "."
                 + photoExtension;
         String blobName = "profile" + File.separator + prodId + File.separator + photoRename;
         log.info("Renamed Profile: " + blobName);
@@ -140,6 +142,7 @@ public class AuthenticationController {
 //        AuthenticationRequest userLoginRequest = new AuthenticationRequest(email, password);
         log.info("Authentication Request " + request);
         Authentication authentication = authenticationService.authenticate(request);
+
         log.info("Authentication User: " + authentication.getPrincipal());
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -156,8 +159,6 @@ public class AuthenticationController {
                         user.getUsername(),
                         user.getEmail(),
                         user.getRole()));
-
-//        return ResponseEntity.ok();
     }
 
     @PostMapping("/signout")

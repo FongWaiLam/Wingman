@@ -25,7 +25,7 @@ public class RFID {
             nullable = false
     )
     private Product product;
-    private boolean isSold = false;
+    private boolean isSold;
     @ManyToOne(
             fetch = FetchType.EAGER
     )

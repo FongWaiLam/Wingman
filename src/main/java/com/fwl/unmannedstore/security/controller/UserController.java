@@ -27,6 +27,12 @@ public class UserController {
         return "login";
     }
 
+    @GetMapping("/login-error")
+    public String loginError(Model model) {
+        model.addAttribute("signInError", true);
+        return "login";
+    }
+
     @GetMapping("new_user")
     public String newUserForm(Model model) {
         Role[] allRoles = Role.values();

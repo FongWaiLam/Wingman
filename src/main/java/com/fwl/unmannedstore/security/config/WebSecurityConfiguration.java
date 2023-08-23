@@ -83,7 +83,7 @@ public class WebSecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        // Even login path stated in formlogin, it still should state in requestMatchers
+        // Even login path stated in formlogin, it  should still state in requestMatchers
         // All login path, signin postRequest and resources should be stated in the requestMatchers.
         // After logged in, a JWTCookie will be sent to the browser
         http

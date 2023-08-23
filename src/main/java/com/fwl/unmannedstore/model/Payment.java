@@ -26,7 +26,7 @@ public class Payment {
             mappedBy = "payment"
     )
     private SalesRecord salesRecord;
-    private boolean isSuccessful = false;
+    private boolean isSuccessful;
     @PrePersist
     void createdAt() {
         this.pay_date_time = new Timestamp(System.currentTimeMillis());

@@ -8,6 +8,8 @@ import com.fwl.unmannedstore.model.Store;
 import com.fwl.unmannedstore.service.ProductService;
 import com.fwl.unmannedstore.service.RFIDService;
 import com.fwl.unmannedstore.service.StoreService;
+import jakarta.persistence.Access;
+import jakarta.persistence.AccessType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/usms")
 @Slf4j
+@Access(AccessType.PROPERTY)
 public class RFIDController {
     @Autowired
     private RFIDService rfidService;

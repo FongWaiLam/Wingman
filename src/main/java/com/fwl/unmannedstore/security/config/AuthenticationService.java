@@ -37,7 +37,8 @@ public class AuthenticationService {
     // If the username or password is incorrect, an exception will be thrown.
     public Authentication authenticate(AuthenticationRequest request) {
         try {
-            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+            Authentication authentication =
+                    authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                     request.getEmail(), request.getPassword()));
             return authentication;
         } catch (AuthenticationException e) {
@@ -50,4 +51,5 @@ public class AuthenticationService {
     public void save(User user) {
         userRepository.save(user);
     }
+
 }

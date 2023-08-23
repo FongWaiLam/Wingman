@@ -27,6 +27,7 @@ public class CheckoutRestController {
         RFID rfid = rfidService.getRFIDByEPC(request.getEpc());
         if (rfid.isSold()) {
             CheckoutScanResponse message = new CheckoutScanResponse();
+            log.info("Product already sold!");
             message.setConflictMessage("Product already sold!");
             return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
         }

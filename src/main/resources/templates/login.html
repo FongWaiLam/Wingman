@@ -21,15 +21,20 @@
 <!--            </div>-->
             <form id="loginForm" class="px-5 mx-3">
                 <div class="px-5">
-                    <div class="col-4 mx-auto">
+                    <div class="px-5 mx-auto">
                         <label for="email" class="form-label">Email</label>
                         <input type="email" class="form-control" name="email" id="email">
                     </div>
                 </div>
                 <div class="px-5">
-                    <div class="col-4 mx-auto">
+                    <div class="px-5 mx-auto">
                         <label for="password" class="form-label">Password</label>
                         <input type="password" class="form-control" name="password" id="password">
+                    </div>
+                </div>
+                <div class="px-5">
+                    <div class="px-5 mx-auto">
+                        <p th:if="${signInError}" class="error">Your username or password is incorrect!</p>
                     </div>
                 </div>
                 <div class="m-5">
