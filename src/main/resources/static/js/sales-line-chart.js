@@ -40,25 +40,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Set chart options
                 var options = {
-                  title: 'Sales Trend of All Stores',
-                  curveType: 'function',
-                  legend: { position: 'bottom' }
+                  title: 'Sales Trend of All Stores This Year',
+                  chartArea: {width: '80%'},
+                  colors: ['#2e41d1'],
+                  hAxis: {
+                    title: 'Year-Month'
+                  },
+                  vAxis: {
+                    title: 'Total Sales (£)',
+                    minValue: 0
+                  }
                   };
 
                 // Instantiate and draw our chart, passing in some options.
-                var chart = new google.visualization.LineChart(document.getElementById('line-chart'));
+//                var chart = new google.visualization.LineChart(document.getElementById('line-chart'));
+                   var chart = new google.visualization.LineChart(document.getElementById('line-chart'));
 
-//                function selectHandler() {
-//                  var selectedItem = chart.getSelection()[0];
-//                  if (selectedItem) {
-//                    var category = data.getValue(selectedItem.row, 0);
-//                    // Put category product data to products variable
-//                    getProductsOfCategory(category);
-//                    alert('The user selected ' + category);
-//                  }
-//                }
-
-//                google.visualization.events.addListener(chart, 'select', selectHandler);
                 chart.draw(data, options);
            }
 

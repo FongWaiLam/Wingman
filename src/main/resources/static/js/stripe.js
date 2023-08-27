@@ -103,6 +103,10 @@ async function fetchPaymentIntentClientSecret(amount) {
 }
 
 async function collectPayment(amount) {
+  if (amount == 0) {
+    console.log("Amount is zero. The user only wants to exit the shop.")
+    throw new Error("Amount is zero");
+  }
   try {
     const client_secret = await fetchPaymentIntentClientSecret(amount);
     terminal.setSimulatorConfiguration({testCardNumber: '4242424242424242'});

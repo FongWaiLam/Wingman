@@ -6,14 +6,17 @@
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" type="text/css" href="/index.css">
+  <link rel="stylesheet" type="text/css" href="/chart.css">
 </head>
 <body>
 <div layout:fragment="page_content">
   <!-- content for this page -->
-  <div class="container text-center my-5">
-    <h1 class="text-center pt-4">Sales Records</h1>
-    <div class="shadow" id="line-chart"></div>
-    <div class="container my-5">
+  <div class="container text-center my-3">
+    <h1 class="text-center pt-3">Sales Records</h1>
+    <div class="card shadow">
+      <div id="line-chart"></div>
+    </div>
+    <div class="container my-3">
       <div class="row my-5">
         <div class="col-4 card"><h6 class="my-auto" for="storeId">Filter Sales Records by Selecting a Store</h6></div>
         <div class="col-4">

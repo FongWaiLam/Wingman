@@ -5,13 +5,14 @@
       layout:decorate="~{base}">
 <head>
   <meta charset="UTF-8">
+  <script src="https://kit.fontawesome.com/1b5f2ec9ab.js" crossorigin="anonymous"></script>
 </head>
 <body>
 <div layout:fragment="page_content">
   <!-- content for this page -->
-  <div class="container text-center my-5">
-    <h1 class="text-center pt-4">Product List</h1>
-    <div class="container my-5">
+  <div class="container text-center my-3">
+    <h1 class="text-center pt-3">Product List</h1>
+    <div class="container my-3">
       <table class="table table-striped table-hover">
         <thead><tr>
           <th scope="col">ID</th>
@@ -25,7 +26,7 @@
           <th scope="col">+ RFID</th>
           <th scope="col">Edit</th>
           <th scope="col">Deactivate</th></tr></thead>
-        <tbody><tr th:each="p :${allProducts}">
+        <tbody><tr th:each="p :${pageProducts}">
           <td th:text="${p.prodId}"></td>
           <td th:text="${p.name}"></td>
           <td th:text="${p.price}"></td>
@@ -43,6 +44,23 @@
                  class="btn btn-outline-primary btn-sm inline"><i class="fa-solid fa-store-slash"></i></a></td>
         </tr></tbody></table>
     </div>
+
+    <nav>
+      <ul class="pagination d-flex justify-content-center">
+        <li th:class="${pageProducts.number == 0} ? disabled">
+          <a class="page-link" th:href="@{/usms/products(page=${pageProducts.number})}" th:tabindex="${pageProducts.number == 0} ? -1">Previous</a>
+        </li>
+        <div th:if="${pageNumberList.size() > 0}"
+             th:each="pageNum : ${pageNumberList}">
+          <li th:class="${pageNum==pageProducts.number + 1} ? active">
+            <a th:href="@{/usms/products(page=${pageNum})}" th:text=${pageNum} th:class="page-link"></a>
+          </li>
+        </div>
+        <li th:class="${pageProducts.number + 1 == pageNumberList.size()} ? disabled">
+          <a class="page-link" th:href="@{/usms/products(page=${pageProducts.number} + 2)}" th:tabindex="${pageProducts.number + 1 == pageNumberList.size()} ? -1">Next</a>
+        </li>
+      </ul>
+    </nav>
   </div>
 </div>
 <th:block layout:fragment="scripts">

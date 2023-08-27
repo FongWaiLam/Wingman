@@ -61,8 +61,13 @@ async function step3Performed() {
     writeToSerialPort(endReadByteArray);
 
     let amountInPence = calTotalAmount(scannedProducts);
-    let paymentIntentId = await collectPayment(amountInPence);
-    paymentIntentId = await capture(paymentIntentId);
+    let paymentIntentId;
+    try {
+        paymentIntentId = await collectPayment(amountInPence);
+        paymentIntentId = await capture(paymentIntentId);
+    } catch(error) {
+        paymentIntentId = 0;
+    }
 
     // Perform payment creation and capture
 //    let paymentIntentId = await createAndCapturePayment();
@@ -71,23 +76,10 @@ async function step3Performed() {
             alertStep.classList.add('hidden');
             processImg2.classList.add('hidden');
             processImg3.classList.remove('hidden');
-
-            updateSalesPaymentRecord(paymentIntentId);
         }
-
-//    createAndCapturePayment().then(function(paymentIntentId) {
-//        // Post Request: Update the payment and sales record
-//        if(typeof paymentIntentId != "undefined") {
-//            alertStep.classList.add('hidden');
-//            processImg2.classList.add('hidden');
-//            processImg3.classList.remove('hidden');
-//
-//            updateSalesPaymentRecord(paymentIntentId);
-//        }
-//    }).catch(function(error) {
-//    console.err("step3Performed() Error: " + error)
-//    });
-
+        if (paymentIntentId != 0) {
+           updateSalesPaymentRecord(paymentIntentId);
+        }
 
     var delayInMilliseconds = 10000; //10 second
     setTimeout(function() {

@@ -10,6 +10,8 @@ import lombok.extern.log4j.Log4j2;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -21,6 +23,9 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Controller
 @Log4j2
@@ -122,9 +127,18 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public ModelAndView getProducts() {
-        List<Product> allProducts = productService.getAllProducts();
-        return new ModelAndView("products", "allProducts", allProducts);
+    public String getProducts(Model model,
+                              @RequestParam("page") Optional<Integer> page) {
+        int currentPage = page.orElse(1);
+        int pageSize = 5;
+        Page<Product> pageProducts = productService.getAllProducts(currentPage,pageSize, "prodId", "DESC");
+        int totalPages = pageProducts.getTotalPages();
+        if (totalPages > 1) {
+            List<Integer> pageNumberList = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+            model.addAttribute("pageNumberList", pageNumberList);
+        }
+        model.addAttribute("pageProducts", pageProducts);
+        return "products";
     }
 
     @GetMapping("/product/{prodId}")
