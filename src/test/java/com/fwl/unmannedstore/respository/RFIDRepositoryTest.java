@@ -127,26 +127,25 @@ class RFIDRepositoryTest {
         List<InventoryDisplay> inventoryDisplays = rfidRepository.findAllUnsoldProductTotalValueAndQuantityByCatIgnoreStore();
         InventoryDisplay inventoryDisplay = null;
         for (InventoryDisplay inventory: inventoryDisplays) {
-            if (inventory.getProdName().equals("Luggage Cover")) {
+            if (inventory.getCategory().equals("Travel")) {
                 inventoryDisplay = inventory;
                 break;
             }
         }
-        assertEquals("Luggage Cover", inventoryDisplay.getProdName());
+        assertEquals("Travel", inventoryDisplay.getCategory());
 
         List<RFID> rfidList = rfidRepository.findByProduct(product);
 
         int noOfProduct = 0;
         double totalValue = 0;
         for(RFID rfid: rfidList) {
-            if (!rfid.isSold()) {
+            if (!rfid.isSold() && rfid.getProduct().getCategory().equals("Travel")) {
                 noOfProduct++;
                 totalValue += rfid.getProduct().getPrice();
             }
-
         }
-        assertEquals(inventoryDisplay.getTotalAmount(), noOfProduct);
-        assertEquals(inventoryDisplay.getTotalValue(), totalValue);
+        assertEquals(noOfProduct, inventoryDisplay.getTotalAmount());
+        assertEquals(totalValue, inventoryDisplay.getTotalValue());
     }
 
     @Test
@@ -172,8 +171,8 @@ class RFIDRepositoryTest {
                 totalValue += rfid.getProduct().getPrice();
             }
         }
-        assertEquals(inventoryDisplay.getTotalAmount(), noOfProductInStore2);
-        assertEquals(inventoryDisplay.getTotalValue(), totalValue);
+        assertEquals(noOfProductInStore2, inventoryDisplay.getTotalAmount());
+        assertEquals(totalValue, inventoryDisplay.getTotalValue());
     }
 
     @Test
@@ -197,8 +196,8 @@ class RFIDRepositoryTest {
                 totalValue += rfid.getProduct().getPrice();
             }
         }
-        assertEquals(inventoryDisplay.getTotalAmount(), noOfProductInStore1);
-        assertEquals(inventoryDisplay.getTotalValue(), totalValue);
+        assertEquals(noOfProductInStore1, inventoryDisplay.getTotalAmount());
+        assertEquals(totalValue, inventoryDisplay.getTotalValue());
     }
 
     @Test
@@ -222,7 +221,7 @@ class RFIDRepositoryTest {
                 totalValue += rfid.getProduct().getPrice();
             }
         }
-        assertEquals(inventoryDisplay.getTotalAmount(), noOfProductInStore1);
-        assertEquals(inventoryDisplay.getTotalValue(), totalValue);
+        assertEquals(noOfProductInStore1, inventoryDisplay.getTotalAmount());
+        assertEquals(totalValue, inventoryDisplay.getTotalValue());
     }
 }

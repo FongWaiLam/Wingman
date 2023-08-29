@@ -32,4 +32,10 @@ public class InventoryDisplay {
         this.storeId = storeId;
         this.storeName = storeName;
     }
+
+    public InventoryDisplay(String category, long totalAmount, double totalValue) {
+        this.category = category;
+        this.totalAmount = totalAmount;
+        this.totalValue = totalValue;
+    }
 }

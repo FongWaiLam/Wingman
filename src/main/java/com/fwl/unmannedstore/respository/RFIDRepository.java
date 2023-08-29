@@ -23,10 +23,10 @@ public interface RFIDRepository extends JpaRepository<RFID, String> {
             "GROUP BY r.product.prodId, r.store.storeId")
     List<InventoryDisplay> findAllUnsoldProductTotalValueAndQuantity();
 
-    @Query("SELECT new com.fwl.unmannedstore.controller.requestResponse.InventoryDisplay(r.product.prodId, r.product.name, r.product.category, COUNT(r.epc), SUM(r.product.price)) " +
+    @Query("SELECT new com.fwl.unmannedstore.controller.requestResponse.InventoryDisplay(r.product.category, COUNT(r.epc), SUM(r.product.price)) " +
             "FROM RFID r " +
             "WHERE r.isSold = false " +
-            "GROUP BY r.product.prodId")
+            "GROUP BY r.product.category")
     List<InventoryDisplay> findAllUnsoldProductTotalValueAndQuantityByCatIgnoreStore();
 
     @Query("SELECT new com.fwl.unmannedstore.controller.requestResponse.InventoryDisplay(r.product.prodId, r.product.name, r.product.category, COUNT(r.epc), SUM(r.product.price), r.store.storeId, r.store.name) " +
