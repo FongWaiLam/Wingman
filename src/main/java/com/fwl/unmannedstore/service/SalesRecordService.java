@@ -31,10 +31,10 @@ public class SalesRecordService {
         return salesRecordRepository.findByStore(store);
     }
 
-    // Get the full sales record for a store for a period of time
-    public List<SalesRecord> getSalesRecordByPeriod(Date start, Date end, Store store) {
-        return salesRecordRepository.findByPeriod(start, end, store.getStoreId());
-    }
+//    // Get the full sales record for a store for a period of time
+//    public List<SalesRecord> getSalesRecordByPeriod(Date start, Date end, Store store) {
+//        return salesRecordRepository.findByPeriod(start, end, store.getStoreId());
+//    }
 
     // Add a new sales record or Update an existing sales record
     public void save(SalesRecord salesRecord) {

@@ -64,13 +64,18 @@ public class JwtService {
 //    }
 
     public String generateTokenFromUsername(String username, Role role) {
-        return Jwts.builder()
-                .setSubject(username)
-                .claim("role", role)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
-                .signWith(key(), SignatureAlgorithm.HS256)
-                .compact();
+        try {
+            return Jwts.builder()
+                    .setSubject(username)
+                    .claim("role", role)
+                    .setIssuedAt(new Date())
+                    .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
+                    .signWith(key(), SignatureAlgorithm.HS256)
+                    .compact();
+        } catch (Exception e) {
+            log.error("Error generating JWT token: {}", e.getMessage());
+            return null;
+        }
     }
 
 

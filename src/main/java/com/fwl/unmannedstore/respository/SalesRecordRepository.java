@@ -17,11 +17,11 @@ import java.util.Optional;
 public interface SalesRecordRepository extends JpaRepository<SalesRecord, Integer> {
     public List<SalesRecord> findByStore(Store store);
 
-    @Query(
-            value = "Select * from sales_record s where s.transaction_date_time >= :start And s.transaction_date_time <= :end And s.store_id = :storeId",
-            nativeQuery = true
-    )
-    public List<SalesRecord> findByPeriod(@Param("start") Date start, @Param("end") Date end, @Param("store") int storeId);
+//    @Query(
+//            value = "Select * from sales_record s where s.transaction_date_time >= :start And s.transaction_date_time <= :end And s.store_id = :storeId",
+//            nativeQuery = true
+//    )
+//    public List<SalesRecord> findByPeriod(@Param("start") Date start, @Param("end") Date end, @Param("store") int storeId);
 
 
     @Query("SELECT new com.fwl.unmannedstore.controller.requestResponse.SalesDisplay(YEAR(s.transactionDateTime), MONTH(s.transactionDateTime), SUM(s.amountInPence)/100.0) " +

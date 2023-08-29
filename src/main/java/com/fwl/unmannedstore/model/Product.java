@@ -56,14 +56,23 @@ public class Product {
     void createdAt() {
         this.creation_date = this.last_updated = new Timestamp(System.currentTimeMillis());
 //        Add after the Security is implemented
-        this.updated_by_user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        try {
+            this.updated_by_user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        } catch (Exception e) {
+            this.updated_by_user = null;
+        }
+
     }
 
     @PreUpdate
     void updatedAt() {
         this.last_updated = new Timestamp(System.currentTimeMillis());
         //Add after the Security is implemented
-        this.updated_by_user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        try {
+            this.updated_by_user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        } catch (Exception e) {
+            this.updated_by_user = null;
+        }
     }
 
 //    public void addRFID(RFID rfid) {
