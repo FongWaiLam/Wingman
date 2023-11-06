@@ -1,8 +1,10 @@
 # Unmanned with Wingman
-## Instant RFID Checkout Solution with Inventory and Sales Management for Unmanned Stores
+Instant RFID Checkout Solution with Inventory and Sales Management for Unmanned Stores
 
 Wingman is a web application that offers a non-scale unmanned stores in both inventory and sales management together with the solution for checking out with smart retail technology, RFID, which significantly enhances their customer’s experiences in an economical manner.
 
+## Demo
+https://youtu.be/nxMKk3To3FI
 ## Technologies
 The technologies applied in this web development involve the Java web framework called Spring Boot, the Spring Data JPA, Spring Security, thymeleaf and its related packages. This development also adopted external APIs to provide necessary functionalities, including Stripe API for payment and Google Chart API for data presentation. The hardware of RFID reader was communicated through the use of Web Serial API to provide efficient checkout experiences for customers.
 
