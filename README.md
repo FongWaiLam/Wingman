@@ -26,9 +26,9 @@ Functional testing was undertaken to make sure Wingman is delivered as stated in
 
 
 ## User Interactions - RFID Scan
-A store keeper registers an item to the inventory system.
-![image](https://github.com/FongWaiLam/Wingman/assets/119539611/8f68251d-b203-4d62-815d-6bca5dd9869b)
+A store keeper registers an item to the inventory system.<br>
+![image](https://github.com/FongWaiLam/Wingman/assets/119539611/8f68251d-b203-4d62-815d-6bca5dd9869b)<br>
 
-A customer checkout an item.
-![image](https://github.com/FongWaiLam/Wingman/assets/119539611/97c256cd-4451-4d98-b264-3f80ddaad6cd)
+A customer checkout an item.<br>
+![image](https://github.com/FongWaiLam/Wingman/assets/119539611/97c256cd-4451-4d98-b264-3f80ddaad6cd)<br>
 
