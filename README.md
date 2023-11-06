@@ -11,26 +11,40 @@ The technologies applied in this web development involve the Java web framework 
 ## Testing
 Functional testing was undertaken to make sure Wingman is delivered as stated in the user stories. Non-functional testing was also performed using Google Lighthouse and user evaluations. Both results indicate that the Wingman built as expected and provides ease and convenience in managing the sales and inventory of the unmanned store and its RFID checkout solution enables the smooth, easy and quick checkout customer experience. In the future releases, valuable suggestions in UI improvement and additional features that cannot be included in this development will be addressed.
 
-## System Architecture Diagram
+
+## Requirements
+![image](https://github.com/FongWaiLam/Wingman/assets/119539611/61736853-e0af-49ce-a805-78e845749f0a)
+
+## Implementation
+### System Architecture Diagram
 ![image](https://github.com/FongWaiLam/Wingman/assets/119539611/833b0bc8-82d3-4103-af99-877d3b5c98f0)
 
 
-## Entity Relationship Diagram
+### Entity Relationship Diagram
 ![image](https://github.com/FongWaiLam/Wingman/assets/119539611/3942ad2d-643c-42cd-9498-139525178ad7)
 
 
-## Site Map (Management System)
+### Site Map (Management System)
 ![image](https://github.com/FongWaiLam/Wingman/assets/119539611/2f296af7-f4c4-49ad-8c0b-477c7e708f6f)
 
 
-## Site Map (Checkout)
+### Site Map (Checkout)
 ![image](https://github.com/FongWaiLam/Wingman/assets/119539611/4e1f6a5e-2acf-40c9-92dc-c8bb628c9b80)
 
 
-## User Interactions - RFID Scan
+### User Interactions - RFID Scan
 A store keeper registers an item to the inventory system.<br>
 ![image](https://github.com/FongWaiLam/Wingman/assets/119539611/8f68251d-b203-4d62-815d-6bca5dd9869b)<br>
 
 A customer checkout an item.<br>
 ![image](https://github.com/FongWaiLam/Wingman/assets/119539611/97c256cd-4451-4d98-b264-3f80ddaad6cd)<br>
+
+### Single Page Application for Checkout
+Checkout Page (Start > Scan > Pay > Done) <br>
+![image](https://github.com/FongWaiLam/Wingman/assets/119539611/528949da-5fba-4fe9-afbf-0532f8b20cfa)
+![image](https://github.com/FongWaiLam/Wingman/assets/119539611/0060bfac-2d4f-4e4b-86c5-ee692360b9aa)
+![image](https://github.com/FongWaiLam/Wingman/assets/119539611/a047fbeb-fe13-4609-8837-ce4e7087db6f)
+![image](https://github.com/FongWaiLam/Wingman/assets/119539611/b4d72a59-39ad-4251-a763-73519a7e757d)
+
+
 
